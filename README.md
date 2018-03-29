@@ -25,11 +25,13 @@ import {extract} from 'dominiq'
 const data = extract(document.body) // {first: 'Tsutomu', last: 'Kawamura'}
 ```
 
-And we can merge the data into `state` continuously:
+Or, we can merge the data into `state` continuously:
 
 ```javascript
 const state = {first: '', last: ''}
-listen(dom, 'change').map(toData).subscribe(data => merge(state, data))
+listen(document.body, 'change') // Event observable
+  .map(toData) // Extract the data
+  .subscribe(data => merge(state, data))
 ```
 
 ## Usage
