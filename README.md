@@ -18,14 +18,14 @@ If we have a DOM tree like this:
 </body>
 ```
 
-We can extract the data from the dom:
+Extract the data from it:
 
 ```javascript
 import {extract} from 'dominiq'
 const data = extract(document.body) // {first: 'Tsutomu', last: 'Kawamura'}
 ```
 
-Or, we can merge the data into `state` continuously:
+Or, merge them into the `state` continuously:
 
 ```javascript
 const state = {first: '', last: ''}
@@ -63,7 +63,7 @@ import view from './view.js'
 const state = {first: '', last: ''}
 const dom = document.body
 const update = () => render(view(state), dom)
-const listener = () => merge(state, extract(dom) && update()
+const listener = () => merge(state, extract(dom)) && update()
 dom.addEventListener('change', listener)
 update()
 ```
