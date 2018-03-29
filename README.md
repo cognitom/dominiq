@@ -22,7 +22,7 @@ We can extract the data from the dom:
 
 ```javascript
 import {extract} from 'dominiq'
-const data = extract(dom) // {first: 'Tsutomu', last: 'Kawamura'}
+const data = extract(document.body) // {first: 'Tsutomu', last: 'Kawamura'}
 ```
 
 ## Usage
