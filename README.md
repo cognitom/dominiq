@@ -4,7 +4,7 @@
 
 - `extract()` for basic extraction
 - `listen()`, `toData()`, `toName()` for observables
-- `<data-group>`, `<data-array>`, `<data-proxy>` for advanced extraction
+- `<input-group>`, `<input-array>`, `<input-proxy>` for advanced extraction
 
 
 ## Core concept
@@ -145,10 +145,10 @@ import 'dominiq/tags'
 HTML:
 
 ```html
-<data-group name="name">
+<input-group name="name">
   <input name="first" value="Tsutomu">
   <input name="last" value="Kawamura">
-</data-group>
+</input-group>
 ```
 
 Data:
@@ -162,15 +162,17 @@ Data:
 }
 ```
 
+**Note**: not like Bootstrap's `<div class="input-group">`, this is just an abstracted data element. There's no default effects on its appearance.
+
 ### Arrays
 
 HTML:
 
 ```html
-<data-array name="people">
+<input-array name="people">
   <input value="Dom">
   <input value="Greg">
-</data-group>
+</input-array>
 ```
 
 Data:
@@ -191,14 +193,14 @@ Some third party custom elements has no events like `change` or `input`. For suc
 HTML:
 
 ```html
-<data-proxy name="animal" selector="[aria-selected]" listen="click">
+<input-proxy name="animal" selector="[aria-selected]" listen="click">
   <paper-dropdown-menu>
     <paper-listbox>
       <paper-item value="dog" aria-selected>Dog</paper-item>
       <paper-item value="cat">Cat</paper-item>
     </paper-listbox>
   </paper-dropdown-menu>
-</data-proxy>
+</input-proxy>
 ```
 
 Data:
@@ -208,3 +210,11 @@ Data:
   "animal": "dog"
 }
 ```
+
+## Sanitizers
+
+
+
+## Motivation
+
+See [Motivation](motivation.md).
