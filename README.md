@@ -25,6 +25,13 @@ import {extract} from 'dominiq'
 const data = extract(document.body) // {first: 'Tsutomu', last: 'Kawamura'}
 ```
 
+And we can merge the data into `state` continuously:
+
+```javascript
+const state = {first: '', last: ''}
+listen(dom, 'change').map(toData).subscribe(data => merge(state, data))
+```
+
 ## Usage
 
 Prepare such a `view` file:
@@ -121,11 +128,11 @@ we will get this data (via `extract()`):
 }
 ```
 
-As you see above, the `name` attribute becomes a key, and the `value` attribute becomes a value in the data object.
+As you see above, the `name` attribute becomes a key, and the `value` attribute becomes a value in the data object. It's totally simple, isn't it?
 
-## Helper Elements
+## Helper elements
 
-Before use these tags, import `dominiq/tags`:
+Before using these tags, import `dominiq/tags`:
 
 ```javascript
 import 'dominiq/tags'
@@ -159,8 +166,8 @@ HTML:
 
 ```html
 <data-array name="people">
-  <input value="Tsutomu">
-  <input value="Mike">
+  <input value="Dom">
+  <input value="Greg">
 </data-group>
 ```
 
@@ -169,7 +176,7 @@ Data:
 ```json
 {
   "people": [
-    "Domniq",
+    "Dom",
     "Greg"
   ]
 }
