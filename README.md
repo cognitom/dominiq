@@ -29,7 +29,7 @@ Or, merge them into the `state` continuously:
 
 ```javascript
 const state = {first: '', last: ''}
-listen(document.body, 'change') // Event observable
+listen(document.body, 'change') // Create event observable
   .map(toData) // Extract the data
   .subscribe(data => merge(state, data))
 ```
@@ -68,7 +68,7 @@ dom.addEventListener('change', listener)
 update()
 ```
 
-`extract()` gets a whole data from DOM tree, but what we need is the data has just changed. So here is a little improvement:
+`extract()` gets a whole data from DOM tree, but what we need is the data which has just changed. So here is a little improvement:
 
 ```javascript
 import {toData} from 'dominiq'
@@ -85,7 +85,7 @@ Install observable polyfills:
 $ npm install zen-observable
 ```
 
-This is a observable version of the code above:
+This is an observable version of the code above:
 
 ```javascript
 import merge from 'lodash.merge'
@@ -96,7 +96,9 @@ import view from './view.js'
 const state = {first: '', last: ''}
 const dom = document.body
 const update = () => render(view(state), dom)
-listen(dom, 'change').map(toData).subscribe(data => merge(state, data) && update())
+listen(dom, 'change') // Create event observable
+  .map(toData) // Extract the data
+  .subscribe(data => merge(state, data) && update())
 update()
 ```
 
@@ -105,11 +107,10 @@ update()
 To catch `click` events on the button, add the lines below:
 
 ```javascript
-listen(dom, 'click').map(toName).subscribe(name => {
-  switch (name) {
-    case 'submit': return alert(`Thanks ${state.first}!`)
-  }
-})
+listen(dom, 'click') // Create event observable
+  .map(toName) // Convert to `name`
+  .filter(name => name == 'submit')
+  .subscribe(() => alert(`Thanks ${state.first}!`))
 ```
 
 ## Name and value attributes
