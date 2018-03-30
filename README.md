@@ -171,12 +171,14 @@ Or *nested* like this:
 
 Which is better? It depends on the size of API and the design of its model. If your page is simple enough, you may prefer *flat* one. If not, you may need it be *nested*.
 
-| type   | merge method    | pros          | cons                   |
-| ------ | --------------- | ------------- | ---------------------- |
-| flat   | Object.assign() | easy and fast | messy for bigger pages |
-| nested | lodash.merge()  | manageable    | not a standard method  |
+Be aware that `Object.assign()` is just "shallow copy", so it doesn't care about nested deeper elements, and it could be override the nested value unexpectedly. To merge properly, another third party method is needed.
 
-Typical nested partial looks like this:
+| type   | merge method      | pros          | cons                  |
+| ------ | ----------------- | ------------- | --------------------- |
+| flat   | `Object.assign()` | easy and fast | messy in bigger pages |
+| nested | `lodash.merge()`  | manageable    | not a native method   |
+
+A typical nested partial looks like this:
 
 ```json
 {"name": {"first": "Tsutomu"}}
