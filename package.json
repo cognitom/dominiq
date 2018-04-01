@@ -1,0 +1,50 @@
+{
+  "name": "dominiq",
+  "version": "0.0.0",
+  "description": "[WIP] JavaScript utilities and web components for extracting the data from DOM",
+  "main": "index.js",
+  "files": [
+    "tags.js"
+  ],
+  "scripts": {
+    "build": "npm-run-all rollup-*",
+    "rollup-main": "rollup -c -i lib/index.js -o index.js --name dominiq",
+    "rollup-tags": "rollup -c -i lib/tags.js -o tags.js --name dominiqTags",
+    "rollup-demo": "rollup -c demo/rollup.config.js",
+    "demo": "npm-run-all --parallel watch-* live-server",
+    "watch-main": "rollup -w -c -i lib/index.js -o index.js --name dominiq",
+    "watch-tags": "rollup -w -c -i lib/tags.js -o tags.js --name dominiqTags",
+    "watch-demo": "rollup -w -c demo/rollup.config.js",
+    "live-server": "live-server demo/ --no-browser",
+    "test": "npm run standard",
+    "standard": "standard lib/*.js tags/*.js demo/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cognitom/dominiq.git"
+  },
+  "keywords": [],
+  "author": "Tsutomu Kawamura",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cognitom/dominiq/issues"
+  },
+  "homepage": "https://github.com/cognitom/dominiq#readme",
+  "dependencies": {
+    "any-observable": "^0.2.0",
+    "lodash.merge": "^4.6.1"
+  },
+  "devDependencies": {
+    "lit-html": "^0.9.0",
+    "live-server": "^1.2.0",
+    "mocha": "^5.0.5",
+    "npm-run-all": "^4.1.2",
+    "reify": "^0.15.1",
+    "rollup": "^0.57.1",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "^3.0.0",
+    "standard": "^11.0.1",
+    "zen-observable": "^0.8.8"
+  }
+}
