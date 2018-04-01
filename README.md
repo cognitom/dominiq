@@ -162,7 +162,7 @@ we will get this data (via `extract()`):
 | full    | extract(dom)  | DOM    |
 | partial | toData(event) | event  |
 
-Only if you want to get entire data, use `extract()`. Otherwise, `toData()` is fast and better way.
+Only if you want to get entire data, use `extract()`. Otherwise, `toData()` is fast and a better way.
 
 ### Flat or nested states
 
@@ -188,7 +188,7 @@ Or *nested* like this:
 }
 ```
 
-Which is better? It depends on the size of API and the design of its model. If your page is simple enough, you may prefer *flat* one. If not, you may need it be *nested*.
+Which is better? It depends on the size of your project and the design of its model. If your page is simple enough, you may prefer *flat* one. If not, you may need it be *nested*.
 
 Be aware that `Object.assign()` is just "shallow copy", so it doesn't care about nested deeper elements, and it could be override the nested value unexpectedly. To merge properly, another third party method is needed.
 
