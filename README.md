@@ -1,14 +1,14 @@
 # Dominiq
 
-[WIP] Web components and JavaScript utilities for extracting the data from DOM:
+[WIP] JavaScript utilities and web components for extracting the data from DOM:
 
 - `extract()` for basic extraction
 - `listen()`, `toData()`, `toName()` for observables
-- `<input-group>`, `<input-array>`, `<input-proxy>` for advanced extraction
+- `<input-proxy>` for unstandard custom elements
 
 ## Core concept
 
-If we have a DOM tree like this:
+From such a DOM tree:
 
 ```html
 <body>
@@ -17,10 +17,9 @@ If we have a DOM tree like this:
 </body>
 ```
 
-Extract the data from it:
+Extract the data:
 
 ```javascript
-import {extract} from 'dominiq'
 const data = extract(document.body) // {first: 'Tsutomu', last: 'Kawamura'}
 ```
 
@@ -38,7 +37,7 @@ listen(document.body, 'change') // Create event observable
 Prepare such a `view` file:
 
 ```javascript
-import {html} from 'lit-html'
+import {html} from 'lit-html/lib/lit-extended'
 export default state => html`
   <h1>Hello ${state.first}!</h1>
   <input name="first" value="${state.first}">
@@ -134,6 +133,26 @@ we will get this data (via `extract()`):
 
 As you see above, the `name` attribute becomes a key, and the `value` attribute becomes a value in the data object. It's totally simple, isn't it?
 
+### Dot concatenated names
+
+Name attributes can take a dodconcatenated name like `person.first`:
+
+```html
+<input name="person.first" value="Tsutomu">
+<input name="person.last" value="Kawamura">
+```
+
+we will get this data (via `extract()`):
+
+```json
+{
+  "person": {
+    "first": "Tsutomu",
+    "last": "Kawamura"
+  }
+}
+```
+
 ### Full or partial data
 
 `extract()` method extracts full data from the DOM. On the other hand `toData()` extracts a partial one from the event.
@@ -145,7 +164,7 @@ As you see above, the `name` attribute becomes a key, and the `value` attribute 
 
 Only if you want to get entire data, use `extract()`. Otherwise, `toData()` is fast and better way.
 
-### Flat or nested
+### Flat or nested states
 
 A `state` could be *flat* like this:
 
@@ -153,7 +172,7 @@ A `state` could be *flat* like this:
 {
   "first": "",
   "last": "",
-  "address": ""
+  "city": ""
 }
 ```
 
@@ -161,7 +180,7 @@ Or *nested* like this:
 
 ```json
 {
-  "name": {
+  "person": {
     "first": "",
     "last": ""
   },
@@ -181,14 +200,14 @@ Be aware that `Object.assign()` is just "shallow copy", so it doesn't care about
 A typical nested partial looks like this:
 
 ```json
-{"name": {"first": "Tsutomu"}}
+{"person": {"first": "Tsutomu"}}
 ```
 
 If you merge this partial into the state above, you will get this one:
 
 ```json
 {
-  "name": {
+  "person": {
     "first": "Tsutomu",
     "last": ""
   },
@@ -197,96 +216,7 @@ If you merge this partial into the state above, you will get this one:
 ```
 
 
-## Helper elements
-
-Before using these tags, import `dominiq/tags`:
-
-```javascript
-import 'dominiq/tags'
-```
-
-### Groups
-
-HTML:
-
-```html
-<input-group name="name">
-  <input name="first" value="Tsutomu">
-  <input name="last" value="Kawamura">
-</input-group>
-```
-
-Data:
-
-```json
-{
-  "name": {
-    "first": "Tsutomu",
-    "last": "Kawamura"
-  }
-}
-```
-
-**Note**: not like Bootstrap's `<div class="input-group">`, this is just an abstracted data element. There's no default effects on its appearance.
-
-### Arrays
-
-HTML:
-
-```html
-<input-array name="people">
-  <input value="Dom">
-  <input value="Greg">
-</input-array>
-```
-
-Data:
-
-```json
-{
-  "people": [
-    "Dom",
-    "Greg"
-  ]
-}
-```
-
-### Proxy
-
-Some third party custom elements has no events like `change` or `input`. For such a unstandard element, `<input-proxy>` can proxy events and values.
-
-HTML:
-
-```html
-<input-proxy name="animal" selector="[aria-selected]" listen="click">
-  <paper-dropdown-menu>
-    <paper-listbox>
-      <paper-item value="dog" aria-selected>Dog</paper-item>
-      <paper-item value="cat">Cat</paper-item>
-    </paper-listbox>
-  </paper-dropdown-menu>
-</input-proxy>
-```
-
-Data:
-
-```json
-{
-  "animal": "dog"
-}
-```
-
-## APIs
-
-### Observable
-
-### Sanitizers
-
-### Custom tags
-
-See [Helper elements](#helper-elements) section avobe.
-
-## Real world example
+## A real world example
 
 In our real world, we need more extra steps:
 
@@ -382,6 +312,20 @@ const sanitizers = {
   last: val => val.toUpperCase()
 }
 const sanitized = sanitize(data, sanitizers)
+```
+
+Nested sanitizers are also allowed:
+
+```javascript
+const sanitizers = {
+  person: {
+    first: val => val.toUpperCase(),
+    last: val => val.toUpperCase()
+  }
+}
+```
+
+Make sure that the structure of `sanitizers` matches to the `state` exactly. Unmatched sanitizers are just ignored.
 
 ### Input validations
 
@@ -401,6 +345,56 @@ Then, check the result of validation like this:
 
 ```html
 <button name="submit" disabled="${!state.ok}">Click me!</button>
+```
+
+## APIs
+
+- `extract(dom)`: extract full data from the element
+  - *dom*: `HTMLElement`
+- `listen(dom, type)`: create an `Observable`
+  - *dom*: `HTMLElement`
+  - *type*: 'change', 'input', 'click' ...etc.
+- `toData(event)`: extract partial data from the event
+- `toName(event)`: study the name of element which the event happens
+- `sanitize(data, sanitizers)`: sanitize the data by `sanitizers`
+  - *data*: data to sanitize
+  - *sanitizers*: the object which contains sanitizer function on each key
+
+### Utilities
+
+- `emptize(data)`: convert `undefined` or `null` to `''` (empty)
+
+### Helper tags
+
+Before using helper tag(s), import `dominiq/tags`:
+
+```javascript
+import 'dominiq/tags'
+```
+
+#### Input Proxy (soon)
+
+Some third party custom elements has no events like `change` or `input`. For such a unstandard element, `<input-proxy>` can proxy events and values.
+
+HTML:
+
+```html
+<input-proxy name="animal" selector="[aria-selected]" listen="click">
+  <paper-dropdown-menu>
+    <paper-listbox>
+      <paper-item value="dog" aria-selected>Dog</paper-item>
+      <paper-item value="cat">Cat</paper-item>
+    </paper-listbox>
+  </paper-dropdown-menu>
+</input-proxy>
+```
+
+Data:
+
+```json
+{
+  "animal": "dog"
+}
 ```
 
 ## Motivation
