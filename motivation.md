@@ -63,6 +63,12 @@ Absolutely, latter seems clean. The point is that *we can handle all events at t
 </body>
 ```
 
-## Auto mapping the data into the state
+## Define the data in a declarative way
 
-The topology of the state and the DOM tree should be equivalent basically. Then, why do we map the change in DOM to the state manually? We can simply do it automatically via `name` and `value` attributes.
+Rendering process are a pure function typically. The same state creates the same rendered result. It should be true for extracting the data back from the DOM. It means that *how to extract data* should be **defined in HTML** by itself. Basically, `name` and `value` attributes are the basic keys for this purpose.
+
+```
+State --> Rendered DOM --(User editing)--> Changed DOM --> Extracted data --> State
+```
+
+The state includes unchanged variables which users can't access. We don't have to extract such a value. What we want to hadle as "data" is what user can interact with: for example, text fields, radio buttons and so on. Tha data is a partial state, so we can merge it back to the state again.
