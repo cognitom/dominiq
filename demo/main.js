@@ -30,5 +30,5 @@ const update = data => {
 listen(dom, 'change').map(toData).subscribe(update)
 listen(dom, 'click').map(toName)
   .filter(name => name === 'submit')
-  .subscribe(() => window.alert(`Thanks ${state.person.first}!`))
+  .subscribe(() => alert(`Thanks ${state.person.first}!`))
 update()
