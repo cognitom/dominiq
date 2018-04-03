@@ -27,8 +27,11 @@ const update = data => {
   merge(state, data) // merge data into state
   render(view(state), dom)
 }
+const actions = name => {
+  switch (name) {
+    case 'submit': return alert(`Thanks ${state.person.first}!`)
+  }
+}
 listen(dom, 'change').map(toData).subscribe(update)
-listen(dom, 'click').map(toName)
-  .filter(name => name === 'submit')
-  .subscribe(() => alert(`Thanks ${state.person.first}!`))
+listen(dom, 'click').map(toName).subscribe(actions)
 update()

@@ -102,13 +102,15 @@ update()
 
 **Note**: `listen()` is just a thin helper and equivalent to [RxJS's fromEvent()](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-fromEvent)
 
-To catch `click` events on the button, add the lines below:
+To catch `click` events on the button, add actions:
 
 ```javascript
-listen(dom, 'click') // Create event observable
-  .map(toName) // Convert to `name`
-  .filter(name => name == 'submit')
-  .subscribe(() => alert(`Thanks ${state.first}!`))
+const actions = name => {
+  switch (name) {
+    case 'submit': return alert(`Thanks ${state.first}!`)
+  }
+}
+listen(dom, 'click').map(toName).subscribe(actions)
 ```
 
 ## Some basics in Dominiq
@@ -223,6 +225,8 @@ In our real world, we need more extra steps:
 - Computed properties: the values calculated from other values in the state. For an example, `full` name depends on `last` and `first`.
 - Async requests: retrieve values from databases, and so on.
 - Sanitizers: removes spaces, capitarizes the first letter, ...etc.
+- Validation: check them!
+- Actions: side efects and ad hoc state manipulations.
 
 ```javascript
 import merge from 'lodash.merge'
@@ -255,7 +259,13 @@ async function main () {
     merge(state, sanitize(data, sanitizers))
     render(view(state), dom)
   }
+  const actions = name => {
+    switch (name) {
+      case 'submit': return alert(`Thanks ${state.person.first}!`)
+    }
+  }
   listen(dom, 'change').map(toData).subscribe(update)
+  listen(dom, 'click').map(toName).subscribe(actions)
   update(state)
 }
 
@@ -329,7 +339,7 @@ Make sure that the structure of `sanitizers` matches to the `state` exactly. Unm
 
 ### Input validations
 
-Before submit, we have to validate properties. For this purpose we can use [computed properties](#computed-properties).
+Before sending information to the server, let's validate properties. For this purpose we can use [computed properties](#computed-properties) again.
 
 **Point**: validate before rendering, not before actions
 
@@ -345,6 +355,23 @@ Then, check the result of validation like this:
 
 ```html
 <button name="submit" disabled="${!state.ok}">Click me!</button>
+```
+
+### Actions
+
+Think about a simple counter. The user clicks "up" or "down" button. 
+
+```javascript
+const state = {counter: 0}
+const update = data => {...}
+const actions = name => {
+  switch (name) {
+    case 'up': return update({counter: state.counter + 1})
+    case 'down': return update({counter: state.counter - 1})
+  }
+}
+listen(dom, 'change').map(toData).subscribe(update)
+listen(dom, 'click').map(toName).subscribe(actions)
 ```
 
 ## APIs
