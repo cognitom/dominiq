@@ -6,6 +6,8 @@
 - `listen()`, `toData()`, `toName()` for observables
 - `<input-proxy>` for unstandard custom elements
 
+![Dominiq's Flow](docs/fig.png)
+
 ## Core concept
 
 From such a DOM tree:
@@ -426,4 +428,4 @@ Data:
 
 ## Motivation
 
-See [Motivation](motivation.md).
+See [Motivation](docs/motivation.md).
