@@ -1,7 +1,7 @@
 import 'any-observable/register/zen'
 import merge from 'lodash.merge'
 import {render} from 'lit-html'
-import {listen, toData, toName, sanitize, emptize} from '../lib/'
+import {listen, toData, toName, sanitize, emptize, register} from '../lib/'
 import view from './view.js'
 
 const state = {
@@ -11,7 +11,10 @@ const state = {
     get full () { return `${this.first} ${this.last}` }
   },
   city: '',
-  get ok () { return !!this.person.first && !!this.city }
+  get ok () { return !!this.person.first && !!this.city },
+  
+  count: 0,
+  waiting: false
 }
 const sanitizers = {
   person: {
@@ -27,11 +30,27 @@ const update = data => {
   merge(state, data) // merge data into state
   render(view(state), dom)
 }
-const actions = name => {
-  switch (name) {
-    case 'submit': return alert(`Thanks ${state.person.first}!`)
+const actions = {
+  countUp ({count}) {
+    return {count: count + 1}
+  },
+  async countUp2 ({count}) {
+    await wait(2000)
+    return {count: count + 1}
+  },
+  async *countUp3 ({count}) {
+    yield {waiting: true, count: ++count}
+    await wait(2000)
+    yield {waiting: false, count: ++count}
   }
 }
+
+const {observable, emit} = register(actions, state)
 listen(dom, 'change').map(toData).subscribe(update)
-listen(dom, 'click').map(toName).subscribe(actions)
+listen(dom, 'click').map(toName).subscribe(emit)
+observable.subscribe(update)
 update()
+
+function wait (msec) {
+  return new Promise(resolve => setTimeout(() => resolve(), msec))
+}
