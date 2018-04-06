@@ -2,9 +2,9 @@
 
 [WIP] JavaScript utilities and web components for extracting the data from DOM:
 
-- `extract()` for basic extraction
-- `listen()`, `toData()`, `toName()` for observables
-- `<input-proxy>` for unstandard custom elements
+- `extract()` data from DOM.
+- `listen()` DOM and convert events `toData()` or `toName()` in Observable way.
+- `register(actions)`, then `emit` the action to send the data to `observable`.
 
 ![Dominiq's Flow](docs/fig.png)
 
@@ -376,6 +376,48 @@ listen(dom, 'change').map(toData).subscribe(update)
 listen(dom, 'click').map(toName).subscribe(actions)
 ```
 
+The code above is ok for small applications. For larger ones, we have an action registration method. The equivalent above is here:
+
+```javascript
+import {register} from 'dominiq'
+const state = {counter: 0}
+const update = data => {...}
+const actions = {
+  up: ({counter}) => ({counter: counter + 1}),
+  down: ({counter}) => ({counter: counter - 1})
+}
+const {observable, emit} = register(actions, state)
+listen(dom, 'change').map(toData).subscribe(update)
+listen(dom, 'click').map(toName).subscribe(emit)
+observable.subscribe(update)
+```
+
+Actions are receive the reference to the state and supporsed to return nothing, or a *partial data*.
+
+**Note**: actions could be one of them:
+
+- function
+- async function (ES2017)
+- **async generator** (ES2018)
+
+```javascript
+const actions = {
+  // async function
+  async load () {
+    const user = await getUser()
+    return {user}
+  },
+  // async generator
+  async *save () {
+    yield {waiting: true} // this may deactivate its UI
+    await putUser()
+    yield {waiting: false} // this may reactivate its UI
+  }
+}
+```
+
+With an async genrator, we can send data twice or more!
+
 ## APIs
 
 - `extract(dom)`: extract full data from the element
@@ -385,6 +427,11 @@ listen(dom, 'click').map(toName).subscribe(actions)
   - *type*: 'change', 'input', 'click' ...etc.
 - `toData(event)`: extract partial data from the event
 - `toName(event)`: study the name of element which the event happens
+- `register(actions[, state])`: this returns `{observable, emit}`.
+  - *actions*: the object which contains actions on each key
+  - *state*: a reference to the state (if you want to write actions in other file, you need to pass `state` here)
+  - *observable*: the observable created by register function.
+  - *emit(name)*: emit the action with `name` and the result will send to observable above.
 - `sanitize(data, sanitizers)`: sanitize the data by `sanitizers`
   - *data*: data to sanitize
   - *sanitizers*: the object which contains sanitizer function on each key
