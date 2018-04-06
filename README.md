@@ -392,7 +392,7 @@ listen(dom, 'click').map(toName).subscribe(emit)
 observable.subscribe(update)
 ```
 
-Actions are receive the reference to the state and supporsed to return nothing, or a *partial data*.
+Actions receives the reference to the state and supporsed to return nothing, or a *partial data* if the state should be changed.
 
 **Note**: actions could be one of them:
 
