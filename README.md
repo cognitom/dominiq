@@ -115,6 +115,8 @@ const actions = name => {
 listen(dom, 'click').map(toName).subscribe(actions)
 ```
 
+Check also [Actions](#actions) section for more details and `register(actions)` method.
+
 ## Some basics in Dominiq
 
 ### Name and value attributes
@@ -224,11 +226,12 @@ If you merge this partial into the state above, you will get this one:
 
 In our real world, we need more extra steps:
 
-- Computed properties: the values calculated from other values in the state. For an example, `full` name depends on `last` and `first`.
-- Async requests: retrieve values from databases, and so on.
-- Sanitizers: removes spaces, capitarizes the first letter, ...etc.
-- Validation: check them!
-- Actions: side efects and ad hoc state manipulations.
+- [Computed properties](#computed-properties): the values calculated from other values in the state. For an example, `full` name depends on `last` and `first`.
+- [Async requests](#async-requests): retrieve values from databases, and so on.
+- [Sanitizers](#sanitizers): removes spaces, capitarizes the first letter, ...etc.
+- [Validation](#validations): check them!
+- [Actions](#actions): side efects and ad hoc state manipulations.
+- [Code separations](#code-separations): one big file is almost unreadable. Keep each small.
 
 ```javascript
 import merge from 'lodash.merge'
@@ -403,20 +406,65 @@ Actions receives the reference to the state and supporsed to return nothing, or 
 ```javascript
 const actions = {
   // async function
-  async load () {
-    const user = await getUser()
-    return {user}
+  async save ({id}) {
+    await save(user)
+    return {message: 'Saved.'}
   },
   // async generator
-  async *save () {
+  async *beterSave ({user}) {
     yield {waiting: true} // this may deactivate its UI
-    await putUser()
+    await save(user)
     yield {waiting: false} // this may reactivate its UI
   }
 }
 ```
 
 With an async genrator, we can send data twice or more!
+
+### Code separations
+
+We already separated our view to `view.js` file. If `main.js` becomes bigger, we may separate `state`, `sanitizers` and `actions`, too.
+
+```javascript
+// main.js
+import view from './view.js'
+import {load, sanitizers} from './person-model.js'
+import * as actions from './actions.js'
+
+main()
+async function main () {
+  const state = await load()
+  const dom = document.body
+  const update = async data => {
+    ...
+    render(view(state), dom)
+  }
+  const {observable, emit} = register(actions, state)
+  listen(dom, 'change').map(toData).subscribe(update)
+  listen(dom, 'click').map(toName).subscribe(emit)
+  observable.subscribe(update)
+  update(state)
+}
+```
+
+Sanitizers could be a part of the model:
+
+```javascript
+// person-model.js
+export const load = async () => {...}
+export const sanitizers = {
+  first: val => val.toUpperCase(),
+  last: val => val.toUpperCase()
+}
+```
+
+Then, export each action one by one:
+
+```javascript
+export function doSomethingSoon (state) {...}
+export async function doSomethingAsync (state) {...}
+export async function* doSomethingMultipleTimes (state) {...}
+```
 
 ## APIs
 
