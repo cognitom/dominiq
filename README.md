@@ -8,6 +8,15 @@
 
 ![Dominiq's Flow](docs/fig.png)
 
+## Contents
+
+- Core concept (see below)
+- Typical usages (see below)
+- [Basics in Dominiq](docs/basics.md)
+- [Advanced usages](docs/advanced.md)
+- [APIs](docs/api.md)
+- [Motivation](docs/motivation.md)
+
 ## Core concept
 
 From such a DOM tree:
@@ -33,14 +42,6 @@ listen(document.body, 'change') // Create event observable
   .map(toData) // Extract the data
   .subscribe(data => merge(state, data))
 ```
-
-## Details
-
-- Typical usages (see below)
-- [Basics in Dominiq](docs/basics.md)
-- [Advanced usages](docs/advanced.md)
-- [APIs](docs/api.md)
-- [Motivation](docs/motivation.md)
 
 ## Typical usages
 
