@@ -1,7 +1,7 @@
 import 'any-observable/register/zen'
 import merge from 'lodash.merge'
 import {render} from 'lit-html'
-import {listen, toData, toName, sanitize, emptize, register} from '../lib/'
+import {listen, toData, sanitize, emptize, register} from '../lib/'
 import view from './view.js'
 
 const state = {
@@ -45,10 +45,9 @@ const actions = {
   }
 }
 
-const {observable, emit} = register(actions, state)
+const toAction = register(actions, state)
 listen(dom, 'change').map(toData).subscribe(update)
-listen(dom, 'click').map(toName).subscribe(emit)
-observable.subscribe(update)
+listen(dom, 'click').flatMap(toAction).subscribe(update)
 update()
 
 function wait (msec) {

@@ -157,7 +157,7 @@ listen(dom, 'change').map(toData).subscribe(update)
 listen(dom, 'click').map(toName).subscribe(actions)
 ```
 
-The code above is ok for small applications. For larger ones, we have an action registration method. The equivalent above is here:
+The code above is not bad, but could be much simpler with our action registration method. The equivalent above is here:
 
 ```javascript
 import {register} from 'dominiq'
@@ -167,10 +167,9 @@ const actions = {
   up: ({counter}) => ({counter: counter + 1}),
   down: ({counter}) => ({counter: counter - 1})
 }
-const {observable, emit} = register(actions, state)
+const toAction = register(actions, state)
 listen(dom, 'change').map(toData).subscribe(update)
-listen(dom, 'click').map(toName).subscribe(emit)
-observable.subscribe(update)
+listen(dom, 'click').flatMap(toAction).subscribe(update)
 ```
 
 Actions receives the reference to the state and supporsed to return nothing, or a *partial data* if the state should be changed.
@@ -199,6 +198,14 @@ const actions = {
 
 With an async genrator, we can send data twice or more!
 
+And be aware that we use `flatMap` here:
+
+```javascript
+listen(dom, 'click').flatMap(toAction).subscribe(update)
+```
+
+The function which is provided by `register()` returns an observable because it could be async.
+
 ## Code separations
 
 We already separated our view to `view.js` file. If `main.js` becomes bigger, we may separate `state`, `sanitizers` and `actions`, too.
@@ -217,10 +224,9 @@ async function main () {
     ...
     render(view(state), dom)
   }
-  const {observable, emit} = register(actions, state)
+  const toAction = register(actions, state)
   listen(dom, 'change').map(toData).subscribe(update)
-  listen(dom, 'click').map(toName).subscribe(emit)
-  observable.subscribe(update)
+  listen(dom, 'click').flatMap(toAction).subscribe(update)
   update(state)
 }
 ```

@@ -105,9 +105,7 @@ import view from './view.js'
 const state = {first: '', last: ''}
 const dom = document.body
 const update = data => render(view(merge(state, data)), dom)
-listen(dom, 'change') // Create event observable
-  .map(toData) // Extract the data
-  .subscribe(update)
+listen(dom, 'change').map(toData).subscribe(update)
 update()
 ```
 
@@ -116,15 +114,14 @@ update()
 To catch `click` events on the button, add actions:
 
 ```javascript
-const actions = name => {
-  switch (name) {
-    case 'submit': return alert(`Thanks ${state.first}!`)
-  }
+const actions = {
+  submit ({first}) { alert(`Thanks ${first}!`) }
 }
-listen(dom, 'click').map(toName).subscribe(actions)
+const toAction = register(actions, state)
+listen(dom, 'click').flatMap(toAction).subscribe(update)
 ```
 
-Check also [Actions](docs/advanced.md#actions) section for more details and `register(actions)` method.
+Check also [Actions](docs/advanced.md#actions) section for more details about `register()` method.
 
 ## License
 
