@@ -99,7 +99,7 @@ This is an observable version of the code above:
 ```javascript
 import merge from 'lodash.merge'
 import {render} from 'lit-html'
-import {listen, toData, toName} from 'dominiq'
+import {listen, toData, toAction} from 'dominiq'
 import view from './view.js'
 
 const state = {first: '', last: ''}
