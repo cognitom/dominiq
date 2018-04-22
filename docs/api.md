@@ -8,11 +8,10 @@
   - *type*: 'change', 'input', 'click' ...etc.
 - `toData(event)`: extract partial data from the event
 - `toName(event)`: study the name of element which the event happens
-- `register(actions[, state])`: this returns `{observable, emit}`.
+- `register(actions[, state])`: this returns `function toAction () {}`.
   - *actions*: the object which contains actions on each key
   - *state*: a reference to the state (if you want to write actions in other file, you need to pass `state` here)
-  - *observable*: the observable created by register function.
-  - *emit(name)*: emit the action with `name` and the result will send to observable above.
+  - *toAction(name)*: a function which take a name argument and returns an observable.
 - `sanitize(data, sanitizers)`: sanitize the data by `sanitizers`
   - *data*: data to sanitize
   - *sanitizers*: the object which contains sanitizer function on each key
@@ -20,4 +19,4 @@
 ## Utilities
 
 - `emptize(data)`: convert `undefined` or `null` to `''` (empty)
-- `<input-proxy>`: a custom element adapter for
+- `<input-proxy>`: (not yet implemented)
