@@ -1,10 +1,10 @@
 # Dominiq
 
-[WIP] JavaScript utilities for extracting the data from DOM:
+JavaScript utilities for extracting the data from DOM:
 
 - `extract()` data from DOM.
 - `listen()` DOM and convert events `toData()` or `toName()` in Observable way.
-- `register(actions)`, then `emit` the action to send the data to `observable`.
+- `register(actions)` and convert events `toAction()`.
 
 ![Dominiq's Flow](docs/fig.png)
 
