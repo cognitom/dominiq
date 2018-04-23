@@ -2,9 +2,12 @@
   "name": "dominiq",
   "version": "0.1.0",
   "description": "[WIP] JavaScript utilities and web components for extracting the data from DOM",
+  "module": "lib/index.js",
   "main": "index.js",
   "files": [
-    "tags.js"
+    "index.js",
+    "tags.js",
+    "lib"
   ],
   "scripts": {
     "build": "npm-run-all rollup-*",
@@ -31,16 +34,21 @@
   },
   "homepage": "https://github.com/cognitom/dominiq#readme",
   "dependencies": {
-    "any-observable": "^0.2.0",
+    "any-observable": "^0.3.0",
     "extend": "^3.0.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-async-generator-functions": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "lit-html": "^0.9.0",
     "live-server": "^1.2.0",
-    "lodash.merge": "^4.6.1",
-    "mocha": "^5.0.5",
+    "mocha": "^5.1.1",
     "npm-run-all": "^4.1.2",
-    "rollup": "^0.57.1",
+    "rollup": "^0.58.1",
+    "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "standard": "^11.0.1",
