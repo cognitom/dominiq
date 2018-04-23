@@ -1,6 +1,6 @@
 {
   "name": "dominiq",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "[WIP] JavaScript utilities and web components for extracting the data from DOM",
   "module": "lib/index.js",
   "main": "index.js",
