@@ -142,34 +142,55 @@ Then, check the result of validation like this:
 
 ## Actions
 
-Think about a simple counter. The user clicks "up" or "down" button. 
+Think about a simple counter. The user clicks "up" or "down" button.
 
 ```javascript
-const state = {counter: 0}
-const update = data => {...}
-const actions = name => {
-  switch (name) {
-    case 'up': return update({counter: state.counter + 1})
-    case 'down': return update({counter: state.counter - 1})
-  }
-}
-listen(dom, 'change').map(toData).subscribe(update)
-listen(dom, 'click').map(toName).subscribe(actions)
+// view.js
+import {html} from 'lit-html/lib/lit-extended'
+export default state => html`
+  <input name="counter" value="${state.counter}">
+  <button name="up">Up</button>
+  <button name="down">Down</button>
+`
 ```
 
-The code above is not bad, but could be much simpler with our action registration method. The equivalent above is here:
+```javascript
+import {render} from 'lit-html'
+import {listen, toData, toName} from 'dominiq'
+import view from './view.js'
+
+const state = {counter: 0}
+const dispatch = name => {
+  switch (name) {
+    case 'up': return {counter: state.counter + 1}
+    case 'down': return {counter: state.counter - 1}
+  }
+}
+const update = data => merge(state, data) && render(view(state), dom)
+
+listen(dom, 'change').map(toData).subscribe(update)
+listen(dom, 'click').map(toName).map(dispatch).subscribe(update)
+update()
+```
+
+The code above works, but looks cluttered a little. We'd like to introduce `App` class here. The equivalent code with `App` could be like this:
 
 ```javascript
-import {register} from 'dominiq'
-const state = {counter: 0}
-const update = data => {...}
+import {render} from 'lit-html'
+import {listen, toData, toName, App} from 'dominiq'
+import view from './view.js'
+
+const initialState = {counter: 0}
 const actions = {
-  up: ({counter}) => ({counter: counter + 1}),
-  down: ({counter}) => ({counter: counter - 1})
+  up ({counter}) { return {counter: counter + 1} },
+  down ({counter}) { return {counter: counter - 1} }
 }
-const toAction = register(actions, state)
-listen(dom, 'change').map(toData).subscribe(update)
-listen(dom, 'click').flatMap(toAction).subscribe(update)
+
+const app = App({initialState, actions})
+listen(dom, 'change').map(toData).subscribe(app.commit)
+listen(dom, 'click').map(toName).flatMap(app.dispatch).subscribe(app.commit)
+listen(app, 'render').subscribe(state => render(view(state), dom))
+app.start()
 ```
 
 Actions receives the reference to the state and supporsed to return nothing, or a *partial data* if the state should be changed.
@@ -182,13 +203,18 @@ Actions receives the reference to the state and supporsed to return nothing, or 
 
 ```javascript
 const actions = {
+  // function
+  save ({id}) {
+    save(user)
+    return {message: 'Saved.'}
+  }
   // async function
-  async save ({id}) {
+  async betterSave ({id}) {
     await save(user)
     return {message: 'Saved.'}
   },
   // async generator
-  async *beterSave ({user}) {
+  async *bestSave ({user}) {
     yield {waiting: true} // this may deactivate its UI
     await save(user)
     yield {waiting: false} // this may reactivate its UI
@@ -201,10 +227,12 @@ With an async genrator, we can send data twice or more!
 And be aware that we use `flatMap` here:
 
 ```javascript
-listen(dom, 'click').flatMap(toAction).subscribe(update)
+listen(dom, 'click').map(toName).flatMap(app.dispatch).subscribe(app.commit)
 ```
 
-The function which is provided by `register()` returns an observable because it could be async.
+The function `app.dispatch()` returns an observable because it could be async.
+
+> **Note**: Why not `Promise`? `Promise` can only return the value once. It's not enough. On the other hand, `Observable` can return the values multiple times.
 
 ## Code separations
 
@@ -218,16 +246,13 @@ import * as actions from './actions.js'
 
 main()
 async function main () {
-  const state = await load()
+  const initialState = await load()
   const dom = document.body
-  const update = async data => {
-    ...
-    render(view(state), dom)
-  }
-  const toAction = register(actions, state)
-  listen(dom, 'change').map(toData).subscribe(update)
-  listen(dom, 'click').flatMap(toAction).subscribe(update)
-  update(state)
+  const app = new App({initialState, actions})
+  listen(dom, 'change').map(toData).subscribe(app.commit)
+  listen(dom, 'click').map(toName).flatMap(app.dispatch).subscribe(app.commit)
+  listen(app, 'render').subscribe(state => render(view(state), dom))
+  app.start()
 }
 ```
 

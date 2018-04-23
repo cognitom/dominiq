@@ -99,7 +99,7 @@ This is an observable version of the code above:
 ```javascript
 import merge from 'lodash.merge'
 import {render} from 'lit-html'
-import {listen, toData, toAction} from 'dominiq'
+import {listen, toData, toName} from 'dominiq'
 import view from './view.js'
 
 const state = {first: '', last: ''}
@@ -114,14 +114,46 @@ update()
 To catch `click` events on the button, add actions:
 
 ```javascript
-const actions = {
-  submit ({first}) { alert(`Thanks ${first}!`) }
+const dispatch = name => {
+  switch (name) {
+    case 'submit': return alert(`Thanks ${state.first}!`)
+    case 'reverse': return {first: state.last, last: state.first}
+  }
 }
-const toAction = register(actions, state)
-listen(dom, 'click').flatMap(toAction).subscribe(update)
+listen(dom, 'click').map(toName).map(dispatch).subscribe(update)
 ```
 
-Check also [Actions](docs/advanced.md#actions) section for more details about `register()` method.
+## Wrapping up
+
+We also provide `App` class which handles states and actions together. `App` has minimalistic APIs:
+
+- `const app = new App(...)`: wires up `initialState` and `actions` (and also `sanitizers`)
+- `app.commit(partial)`: commits data to its state
+- `app.dispatch(name)`: dispatch an action
+- `app.start()`: starts the app
+
+These APIs are designed to use with observables:
+
+```javascript
+import {render} from 'lit-html'
+import {listen, toData, toName, App} from 'dominiq'
+import view from './view.js'
+
+const initialState = {first: '', last: ''}
+const actions = {
+  submit ({first}) { alert(`Thanks ${first}!`) },
+  reverse ({first, last}) { return {first: last, last: first} }
+}
+
+const app = new App({initialState, actions})
+const dom = document.body
+listen(dom, 'change').map(toData).subscribe(app.commit)
+listen(dom, 'click').map(toName).flatMap(app.dispatch).subscribe(app.commit)
+listen(app, 'render').subscribe(state => render(view(state), dom))
+app.start()
+```
+
+Check also [Actions](docs/advanced.md#actions) section for more details.
 
 ## License
 
