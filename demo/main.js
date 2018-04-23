@@ -1,10 +1,11 @@
 import 'any-observable/register/zen'
-import merge from 'lodash.merge'
+import extend from 'extend'
 import {render} from 'lit-html'
-import {listen, toData, sanitize, emptize, register} from '../lib/'
+import {listen, toData, toName, App} from '../lib/'
+import {emptize} from './lib.js'
 import view from './view.js'
 
-const state = {
+const initialState = {
   person: {
     first: '',
     last: '',
@@ -23,32 +24,27 @@ const sanitizers = {
   },
   city: val => val.toLowerCase()
 }
-const dom = document.body
-const update = data => {
-  sanitize(data, sanitizers) // Sanitize with sanitizers above
-  emptize(data) // Convert null or undefined to empty
-  merge(state, data) // merge data into state
-  render(view(state), dom)
-}
 const actions = {
   countUp ({count}) {
     return {count: count + 1}
   },
-  async countUp2 ({count}) {
+  async countUp2 (state) { // don't use destructuring here because the state would change
     await wait(2000)
-    return {count: count + 1}
+    return {count: state.count + 1}
   },
-  async *countUp3 ({count}) {
-    yield {waiting: true, count: ++count}
+  async *countUp3 (state) {
+    yield {waiting: true, count: state.count + 1}
     await wait(2000)
-    yield {waiting: false, count: ++count}
+    yield {waiting: false, count: state.count + 1}
   }
 }
 
-const toAction = register(actions, state)
-listen(dom, 'change').map(toData).subscribe(update)
-listen(dom, 'click').flatMap(toAction).subscribe(update)
-update()
+const app = new App({initialState, sanitizers, actions})
+const dom = document.body
+listen(dom, 'change').map(toData).subscribe(app.commit)
+listen(dom, 'click').map(toName).flatMap(app.dispatch).subscribe(app.commit)
+listen(app, 'render').map(emptize).subscribe(state => render(view(state), dom))
+app.start()
 
 function wait (msec) {
   return new Promise(resolve => setTimeout(() => resolve(), msec))
