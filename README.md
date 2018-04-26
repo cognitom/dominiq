@@ -4,7 +4,7 @@ JavaScript utilities for extracting the data from DOM:
 
 - `extract()` data from DOM.
 - `listen()` DOM and convert events `toData()` or `toName()` in Observable way.
-- `App` class provides easy way to handle states and actions:
+- `App` class provides an easy way to handle states and actions:
   - `app.commit()` to mutate its state
   - `app.dispatch()` to call an action
 
