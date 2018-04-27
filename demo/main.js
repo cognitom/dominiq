@@ -1,4 +1,3 @@
-import 'any-observable/register/zen'
 import {render} from 'lit-html'
 import {listen, toData, toName, App} from '../lib/'
 import {emptize} from './lib.js'
