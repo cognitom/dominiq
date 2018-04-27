@@ -34,8 +34,7 @@
   },
   "homepage": "https://github.com/cognitom/dominiq#readme",
   "dependencies": {
-    "any-observable": "^0.3.0",
-    "extend": "^3.0.1"
+    "any-observable": "^0.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
