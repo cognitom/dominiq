@@ -16,3 +16,7 @@ export function emptize (data) {
   }
   return data
 }
+
+export function sleep (msec) {
+  return new Promise(resolve => setTimeout(() => resolve(), msec))
+}

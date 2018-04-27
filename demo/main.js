@@ -1,6 +1,6 @@
 import {render} from 'lit-html'
 import {listen, toData, toName, App} from '../lib/'
-import {emptize} from './lib.js'
+import {emptize, sleep} from './lib.js'
 import view from './view.js'
 
 const initialState = {
@@ -27,12 +27,12 @@ const actions = {
     return {count: count + 1}
   },
   async countUp2 (state) { // don't use destructuring here because the state would change
-    await wait(2000)
+    await sleep(2000)
     return {count: state.count + 1}
   },
   async *countUp3 (state) {
     yield {waiting: true, count: state.count + 1}
-    await wait(2000)
+    await sleep(2000)
     yield {waiting: false, count: state.count + 1}
   }
 }
@@ -43,7 +43,3 @@ listen(dom, 'change').map(toData).subscribe(app.commit)
 listen(dom, 'click').map(toName).flatMap(app.dispatch).subscribe(app.commit)
 listen(app, 'render').map(emptize).subscribe(state => render(view(state), dom))
 app.start()
-
-function wait (msec) {
-  return new Promise(resolve => setTimeout(() => resolve(), msec))
-}
