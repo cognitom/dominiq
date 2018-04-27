@@ -7,20 +7,23 @@
   "files": [
     "index.js",
     "tags.js",
+    "observable-polyfill.js",
     "lib"
   ],
   "scripts": {
     "build": "npm-run-all rollup-*",
-    "rollup-main": "rollup -c -i lib/index.js -o index.js --name dominiq",
-    "rollup-tags": "rollup -c -i lib/tags.js -o tags.js --name dominiqTags",
+    "rollup-main": "rollup -c",
+    "rollup-tags": "rollup -c tags/rollup.config.js",
+    "rollup-polyfill": "rollup -c polyfill/rollup.config.js && cp observable-polyfill.js demo/",
     "rollup-demo": "rollup -c demo/rollup.config.js",
     "demo": "npm-run-all --parallel watch-* live-server",
-    "watch-main": "rollup -w -c -i lib/index.js -o index.js --name dominiq",
-    "watch-tags": "rollup -w -c -i lib/tags.js -o tags.js --name dominiqTags",
+    "watch-main": "rollup -w -c",
+    "watch-tags": "rollup -w -c tags/rollup.config.js",
     "watch-demo": "rollup -w -c demo/rollup.config.js",
     "live-server": "live-server demo/ --no-browser",
     "test": "npm run standard",
-    "standard": "standard lib/*.js tags/*.js demo/*.js"
+    "standard": "standard lib/*.js tags/*.js polyfill/*.js demo/main.js demo/view.js demo/lib.js",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -33,9 +36,6 @@
     "url": "https://github.com/cognitom/dominiq/issues"
   },
   "homepage": "https://github.com/cognitom/dominiq#readme",
-  "dependencies": {
-    "any-observable": "^0.3.0"
-  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -49,7 +49,9 @@
     "rollup": "^0.58.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-inject": "^2.0.0",
     "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "^3.0.0",
     "standard": "^11.0.1",
     "zen-observable": "^0.8.8"
   }
