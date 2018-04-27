@@ -3,4 +3,5 @@ node_modules
 *.map
 index.js
 tags.js
+observable-polyfill.js
 demo/bundle.js
