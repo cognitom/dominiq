@@ -21,8 +21,8 @@
     "watch-tags": "rollup -w -c tags/rollup.config.js",
     "watch-demo": "rollup -w -c demo/rollup.config.js",
     "live-server": "live-server demo/ --no-browser",
-    "test": "npm run standard",
-    "standard": "standard lib/*.js tags/*.js polyfill/*.js demo/main.js demo/view.js demo/lib.js",
+    "test": "jest",
+    "prettier": "prettier {lib,tags,polyfill,test}/**/*.js demo/{main,view,lib}.js",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -42,17 +42,33 @@
     "babel-plugin-transform-async-generator-functions": "^6.24.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "jest": "^22.4.3",
     "lit-html": "^0.9.0",
     "live-server": "^1.2.0",
-    "mocha": "^5.1.1",
     "npm-run-all": "^4.1.2",
+    "prettier": "^1.12.1",
     "rollup": "^0.58.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-inject": "^2.0.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^3.0.0",
-    "standard": "^11.0.1",
     "zen-observable": "^0.8.8"
+  },
+  "babel": {
+    "presets": "env"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "lib/*.js"
+    ],
+    "setupFiles": [
+      "./test/lib/setup.js"
+    ]
+  },
+  "prettier": {
+    "semi": false
   }
 }
