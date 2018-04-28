@@ -5,7 +5,7 @@ import babel from 'rollup-plugin-babel'
 import uglify from 'rollup-plugin-uglify'
 
 export default {
-  input: 'demo/main.js',
+  input: 'demo/basic-app/main.js',
   plugins: [
     resolve(),
     commonjs(),
@@ -26,7 +26,7 @@ export default {
     uglify()
   ],
   output: {
-    file: 'demo/bundle.js',
+    file: 'demo/basic-app/bundle.js',
     format: 'iife',
     sourcemap: true
   }
