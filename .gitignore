@@ -1,9 +1,9 @@
-node_modules
+/node_modules
 *.log
 *.map
-index.js
-tags.js
+/index.js
+/tags.js
 observable-polyfill.js
-demo/bundle.js
-coverage
+/demo/bundle.js
+/coverage
 
