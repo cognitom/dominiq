@@ -1,5 +1,9 @@
 # Dominiq
 
+[![Travis CI](https://img.shields.io/travis/cognitom/dominiq/master.svg)](https://travis-ci.org/cognitom/dominiq)
+[![Codecov](https://img.shields.io/codecov/c/github/cognitom/dominiq/master.svg)](https://codecov.io/gh/cognitom/dominiq)
+[![npm](https://img.shields.io/npm/v/dominiq.svg)](https://www.npmjs.org/package/dominiq)
+
 JavaScript utilities for extracting the data from DOM:
 
 - `extract()` data from DOM.
