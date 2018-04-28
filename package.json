@@ -11,7 +11,7 @@
     "lib"
   ],
   "scripts": {
-    "build": "npm-run-all rollup-*",
+    "build": "npm run prettier && npm-run-all rollup-*",
     "rollup-main": "rollup -c",
     "rollup-tags": "rollup -c tags/rollup.config.js",
     "rollup-polyfill": "rollup -c polyfill/rollup.config.js && cp observable-polyfill.js demo/lib/",
@@ -22,7 +22,7 @@
     "watch-demo": "rollup -w -c demo/basic-app/rollup.config.js",
     "live-server": "live-server demo/ --no-browser",
     "test": "jest",
-    "prettier": "prettier {lib,tags,polyfill,test}/**/*.js demo/{main,view,lib}.js",
+    "prettier": "prettier --write {lib,tags,polyfill,test}/**/*.js demo/{main,view,lib}.js rollup.config.js",
     "prepublish": "npm run build"
   },
   "repository": {

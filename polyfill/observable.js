@@ -1,1 +1,1 @@
-module.exports = require('zen-observable')
+module.exports = require("zen-observable")

@@ -1,1 +1,1 @@
-global.Observable = require('zen-observable')
+global.Observable = require("zen-observable")
