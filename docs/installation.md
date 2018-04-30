@@ -69,6 +69,3 @@ You may also need `regenerator` in some way:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/babel-regenerator-runtime@6.5.0/runtime.min.js"></script>
 ```
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5OTU3ODU0OTZdfQ==
--->
