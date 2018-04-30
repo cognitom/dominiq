@@ -64,3 +64,21 @@ test("converts e to data", done => {
   input.value = "Mike"
   mock.dispatch("change", input)
 })
+
+test("returns null when the target has no name attribute", done => {
+  const dom = document.body
+  dom.innerHTML = `
+    <form>
+      <input value="John">
+    </form>`
+  const input = dom.querySelector("input")
+  const mock = new DOMMock()
+  listen(mock, "change")
+    .map(toData)
+    .subscribe(partial => {
+      expect(partial).toBeNull()
+      done()
+    })
+  input.value = "Mike"
+  mock.dispatch("change", input)
+})
