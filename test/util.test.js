@@ -1,4 +1,4 @@
-import { readonly, merge } from "../lib/util.js"
+import { readonly, merge, getNestedItem } from "../lib/util.js"
 
 describe("readonly", () => {
   test("makes readonly", () => {
@@ -35,5 +35,13 @@ describe("merge", () => {
     const source = { first: "Mike" }
     const ref = merge(target, source)
     expect(ref).toBe(target)
+  })
+})
+
+describe("misc", () => {
+  test("gets a nested item", () => {
+    const state = { person: { first: "John", last: "Doe" } }
+    const item = getNestedItem("person.first", state)
+    expect(item).toBe("John")
   })
 })
