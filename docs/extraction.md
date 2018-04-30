@@ -106,6 +106,17 @@ listen(document.body, "change") // Create event observable
   .subscribe(console.log) // { first: "Mike" }
 ```
 
+It's a much prefered way in Dominiq. Let's use this as a new standard! Observable simplifies the flow and process of event and data. In the example above, `listen()` returns an Observable object. Observable has a few methods:
+
+- `observable.subscribe()`: subscribes the observable and catches the data.
+- `observable.map()`: modifies the data like `Array.prototype.map()`.
+- `observable.filter()`: filters the data like `Array.prototype.filter()`.
+- `observable.flatMap()`: another version of `.map()`. It can handle async operations inside.
+
+See [zen-observable](https://github.com/zenparsing/zen-observable) for more details.
+
+> **Note**: Observable proposal is [at Stage 1](https://github.com/tc39/proposals#stage-1) and ready to go to Stage 2.
+
 ## Full or partial data
 
 `extract()` method extracts full data from the DOM. On the other hand `toData()` extracts a partial one from the event. Compare these:
