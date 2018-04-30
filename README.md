@@ -79,7 +79,7 @@ export default state => html`
 
 ```javascript
 import { render } from "lit-html"
-import { listen, toData, App } from "dominiq"
+import { listen, toData, toName, App } from "dominiq"
 import view from "./view.js"
 
 const initialState = { first: "", last: "" }
@@ -103,3 +103,6 @@ app.start()
 ## License
 
 MIT
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMjk5NTU5MjddfQ==
+-->
