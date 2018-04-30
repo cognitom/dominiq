@@ -12,8 +12,6 @@ The state turns into the DOM via a *rendering* function. Then how about the opos
 state <--(extraction)-- DOM
 ```
 
-> **Note**: `render()` is not the part of `dominiq` but provided from [lit-html](https://github.com/Polymer/lit-html) or other view libraries.
-
 For example, from such a DOM tree:
 
 ```html
@@ -29,6 +27,8 @@ we could *extract* the data like this:
 const data = extract(document.body)
 // { first: "John", last: "Doe" }
 ```
+
+> **Note**: `render()` function is not the part of `dominiq` but provided from [lit-html](https://github.com/Polymer/lit-html) or other view libraries.
 
 ## Nested names
 
