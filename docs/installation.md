@@ -1,6 +1,6 @@
 # Installation
 
-Install via npm:
+Install via `npm` (or `yarn` or whatever):
 
 ```bash
 $ npm install dominiq
@@ -70,5 +70,5 @@ You may also need `regenerator` in some way:
 <script src="https://cdn.jsdelivr.net/npm/babel-regenerator-runtime@6.5.0/runtime.min.js"></script>
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkyNzgxMzAxXX0=
+eyJoaXN0b3J5IjpbLTE5OTU3ODU0OTZdfQ==
 -->
