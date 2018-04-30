@@ -23,6 +23,9 @@ Dominiq found a natural way to build an application with modern methods. We full
 - [Basic usages](#basic-usages) (see below)
 - [Installation](docs/installation.md)
 - [Extraction](docs/extraction.md)
+	- From events
+	- Event delegation
+	- Via Observables
 - [State](docs/state.md)
 	- Flat or nested
 	- Computed properties
@@ -31,8 +34,6 @@ Dominiq found a natural way to build an application with modern methods. We full
 	- Dispatch
 	- Mutation
 	- Async operation
-- [Observable](docs/observable.md)
-	- Event delegation
 - [APIs](docs/api.md)
 
 ## Core concept
@@ -103,6 +104,3 @@ app.start()
 ## License
 
 MIT
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMjk5NTU5MjddfQ==
--->
