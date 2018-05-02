@@ -92,14 +92,7 @@ Or *nested* like this:
 
 Which is better? It depends on the size of your project and the design of its model. If your page is simple enough, you may prefer *flat* one. If not, you may need it be *nested*.
 
-Be aware that `Object.assign()` is just "shallow copy", so it doesn't care about nested deeper elements, and it could be override the nested value unexpectedly. To merge a nested one properly, Dominiq has internal method `merge()`, and it's exported for users, too.
-
-| type   | merge method      | pros          | cons                  |
-| ------ | ----------------- | ------------- | --------------------- |
-| flat   | `Object.assign()` | easy and fast | messy in bigger pages |
-| nested | `merge()`         | manageable    | not a native method   |
-
-A typical nested partial looks like this:
+Then, how can we commit a nested value in deep? A typical nested partial looks like this:
 
 ```json
 {"person": {"first": "John"}}
