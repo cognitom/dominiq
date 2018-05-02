@@ -30,7 +30,7 @@ Domniq provides the simple way to commit or retrieve a new state. The first step
 
 ```javascript
 const initialState = { first: "John", last: "Doe" }
-const app = App({ initialState })
+const app = new App({ initialState })
 ```
 
 How can I change the state? The instance has a `.commit()` method:
