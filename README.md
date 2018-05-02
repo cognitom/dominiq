@@ -1,3 +1,4 @@
+
 # Dominiq
 
 [![Travis CI](https://img.shields.io/travis/cognitom/dominiq/master.svg)](https://travis-ci.org/cognitom/dominiq) [![Codecov](https://img.shields.io/codecov/c/github/cognitom/dominiq/master.svg)](https://codecov.io/gh/cognitom/dominiq) [![npm](https://img.shields.io/npm/v/dominiq.svg)](https://www.npmjs.org/package/dominiq)
@@ -23,17 +24,11 @@ Dominiq found a natural way to build an application with modern methods. We full
 - [Basic usages](#basic-usages) (see below)
 - [Installation](docs/installation.md)
 - [Extraction](docs/extraction.md)
-	- From events
-	- Event delegation
-	- Via Observables
+	- Nested names / From events / Via Observables / Full or partial data / Event delegation
 - [State](docs/state.md)
-	- Flat or nested
-	- Computed properties
-	- Auto sanitization
+	- Set and get / Flat or nested / Computed properties / Input validations / Sanitization
 - [Action](docs/action.md)
-	- Dispatch
-	- Mutation
-	- Async operation
+	- Dispatch / Mutation / Async operation
 - [APIs](docs/api.md)
 
 ## Core concept
@@ -42,18 +37,18 @@ From such a DOM tree:
 
 ```html
 <body>
-  <input name="first" value="Tstuomu">
-  <input name="last" value="Kawamura">
+  <input name="first" value="John">
+  <input name="last" value="Doe">
 </body>
 ```
 
 Extract the data:
 
 ```javascript
-const data = extract(document.body) // { first: "Tsutomu", last: "Kawamura" }
+const data = extract(document.body) // { first: "John", last: "Doe" }
 ```
 
-Or, merge them into the `state` continuously:
+Or, merge them into the `state` continuously in Observable way:
 
 ```javascript
 const state = { first: "", last: "" }
@@ -64,9 +59,10 @@ listen(document.body, "change") // Create event observable
 
 ## Basic usages
 
-Prepare such a `view` file:
+Prepare such a view file:
 
 ```javascript
+// view.js
 import {html} from "lit-html/lib/lit-extended"
 export default state => html`
   <h1>Hello ${ state.first }!</h1>
@@ -76,7 +72,7 @@ export default state => html`
 `
 ```
 
-**Note**: In the examples below, we use [lit-html](https://github.com/Polymer/lit-html) as a HTML renderer, but you can choose any library/framework for it.
+**Note**: In the example, we use [lit-html](https://github.com/Polymer/lit-html) as a HTML renderer, but you can choose any library/framework for it.
 
 ```javascript
 import { render } from "lit-html"
