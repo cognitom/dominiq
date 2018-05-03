@@ -115,3 +115,20 @@ const actions = {
 ```
 
 It's epic, isn't it? With an async genrator, we can send data twice or more!
+
+## Separated code
+
+You might want to write actions in a separated file. That's a good idea. Try the code like below:
+
+```javascript
+// actions.js
+export function doSomethingSoon (state) {...}
+export async function doSomethingAsync (state) {...}
+export async function* doSomethingMultipleTimes (state) {...}
+```
+
+Then, import them:
+
+```javascript
+import * as actions from './actions.js'
+```

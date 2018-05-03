@@ -28,7 +28,7 @@ Dominiq found a natural way to build an application with modern methods. We full
 - [State](docs/state.md)
 	- Set and get / Flat or nested / Computed properties / Input validations / Sanitization
 - [Action](docs/action.md)
-	- Dispatch / Mutation / Async operation
+	- Dispatch / Mutation / Async operation / Separated code
 - [APIs](docs/api.md)
 
 ## Core concept
