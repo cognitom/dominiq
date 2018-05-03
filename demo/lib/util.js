@@ -1,7 +1,11 @@
 const emptizer = {
   get(target, key) {
     const isObject = typeof target[key] === "object" && target[key] !== null
-    return isObject ? new Proxy(target[key], emptizer) : target[key] || ''
+    return isObject
+      ? new Proxy(target[key], emptizer)
+      : target[key] === undefined || target[key] === null
+        ? ""
+        : target[key]
   }
 }
 
@@ -16,6 +20,6 @@ export function emptize(target) {
   return new Proxy(target, emptizer)
 }
 
-export function sleep (msec) {
+export function sleep(msec) {
   return new Promise(resolve => setTimeout(() => resolve(), msec))
 }

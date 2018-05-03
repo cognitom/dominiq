@@ -1,4 +1,4 @@
-import {html} from 'lit-html/lib/lit-extended'
+import { html } from "lit-html/lib/lit-extended"
 
 export default state => html`
   <h1>Hello ${state.person.full}!</h1>
@@ -10,5 +10,7 @@ export default state => html`
   <p>${state.count}</p>
   <button name="countUp">1. Count up now!</button>
   <button name="countUp2">2. Count up two sec later!</button>
-  <button name="countUp3" disabled="${state.waiting}">${state.waiting ? 'Now waiting...' : '3. Count up now and later!'}</button>
+  <button name="countUp3" disabled="${state.waiting}">${
+  state.waiting ? "Now waiting..." : "3. Count up now and later!"
+}</button>
 `

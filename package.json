@@ -20,7 +20,7 @@
     "watch-demo": "rollup -w -c demo/basic-app/rollup.config.js",
     "live-server": "live-server demo/ --no-browser",
     "test": "jest",
-    "prettier": "prettier --write {lib,tags,test}/**/*.js demo/{main,view,lib}.js rollup.config.js",
+    "prettier": "prettier --write {lib,tags,test}/**/*.js demo/**/{main,view}.js demo/lib/*.js rollup.config.js",
     "prepublish": "npm run build"
   },
   "repository": {
