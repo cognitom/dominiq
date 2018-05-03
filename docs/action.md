@@ -96,19 +96,19 @@ Actions could be one of them:
 ```javascript
 const actions = {
   // function
-  save ({id}) {
-    save(user)
+  save (state) {
+    sendToServer(state.user)
     return {message: 'Saved.'}
   }
   // async function
-  async betterSave ({id}) {
-    await save(user)
+  async betterSave (state) {
+    await sendToServer(state.user)
     return {message: 'Saved.'}
   },
   // async generator
-  async *bestSave ({user}) {
+  async *bestSave (state) {
     yield {waiting: true} // this may deactivate its UI
-    await save(user)
+    await sendToServer(state.user)
     yield {waiting: false} // this may reactivate its UI
   }
 }
