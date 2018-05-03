@@ -131,4 +131,48 @@ Only if you want to get entire data, use `extract()`. Otherwise, `toData()` is f
 
 ## Event delegation
 
-(later...)
+You may write an event handler on each element's `onchange`:
+
+```html
+// Example A
+<body>
+  <form>
+    <input name="first" onchange="...">
+    <input name="second" onchange="...">
+    <input name="third" onchange="...">
+  </form>
+</body>
+```
+
+But, you don't have to. Let them delegate the event to their parent element:
+
+```html
+// Example B
+<body>
+  <form onchange="...">
+    <input name="first">
+    <input name="second">
+    <input name="third">
+  </form>
+</body>
+```
+
+Should we write a handler in HTML? No. We can keep HTML clean:
+
+```html
+// Example C
+<body>
+  <form>
+    <input name="first">
+    <input name="second">
+    <input name="third">
+  </form>
+</body>
+```
+
+And `listen()` from outside the view:
+
+```javascript
+const dom = document.body // or document.forms[0]
+listen(dom, "change").map(toData).subscribe(...)
+```
