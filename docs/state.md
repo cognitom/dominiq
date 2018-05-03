@@ -166,3 +166,5 @@ const sanitizers = {
 ```
 
 Make sure that the structure of `sanitizers` matches to the `state` exactly. Unmatched sanitizers are just ignored.
+
+**Note**: for simplicity, a sanitizer can't be an async function. If you need an async one inside a sanitization, you may need an async [action](action.md).
