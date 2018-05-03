@@ -1,3 +1,4 @@
+
 # Action
 
 An action is just a function. For example, a simple action could be like following:
@@ -25,13 +26,15 @@ Then, dispatch:
 app.dispatch('hello')
 ```
 
-Basically, that's it. But, we hava to mention about the use case with Observable. If we have such a HTML:
+Basically, that's it.
+
+Typically, we use this in Observable streams. If we have such a HTML:
 
 ```html
 <button name="hello">Click me!</button>
 ```
 
-We can use `app.dispatch` like this:
+we can use `app.dispatch` like this:
 
 ```javascript
 listen(document.body, 'click')
@@ -45,17 +48,70 @@ The argument is the name of the action you want to dispatch.
 
 ## Mutation
 
+`app.dispatch()` returns an Observable which emits what the action returns. So it's a good idea to pass it to `app.commit()` to mutate the state:
+
 ```javascript
 const initialState = { counter: 0 }
 const actions = {
-  hello (state) { return { counter: state.counter + 1 } },
-  down (state) { return { counter: state.counter - 1 } }
+  up (state) { return { counter: state.counter + 1 } }
 }
-const dom = document.body
 const app = new App({initialState, actions})
-listen(dom, 'click').map(toName).flatMap(app.dispatch).subscribe(app.commit)
-listen(app, 'render').subscribe(state => render(view(state), dom))
-app.start()
+app.dispatch("up") // returns an Observable
+  .subscribe(app.commit) // subscribe it and pass the data to app.commit()
 ```
 
+**Note**: `.commit()` method is bound to `app` in constructor automatically, so you don't have to write like `.subscribe(name => app.commit(name))`.
+
+Ok, then, try the Observable style.
+
+```html
+<button name="up">Up!</button>
+```
+
+With the HTML above, we can listen the button, and continuously dispatch `up` action when the button is clicked:
+
+```javascript
+const initialState = { counter: 0 }
+const actions = {
+  up (state) { return { counter: state.counter + 1 } }
+}
+const app = new App({initialState, actions})
+listen(document.body, "click").map(toName)
+  .flatMap(app.dispatch) // .flatMap() serialize the Observable which app.dispatch() returns
+  .subscribe(app.commit) // pass them to app.commit()
+```
+
+The trick happens here: `.flatMap(app.dispatch)` serializes the values into one Observable stream.
+
+> **Note**: Why not `Promise`? `Promise` can only return the value once. It's not enough. On the other hand, `Observable` can return the values multiple times. See also `async generator` in the next section.
+
 ## Async operation
+
+Actions could be one of them:
+
+- function
+- async function (ES2017)
+- **async generator** (ES2018)
+
+```javascript
+const actions = {
+  // function
+  save ({id}) {
+    save(user)
+    return {message: 'Saved.'}
+  }
+  // async function
+  async betterSave ({id}) {
+    await save(user)
+    return {message: 'Saved.'}
+  },
+  // async generator
+  async *bestSave ({user}) {
+    yield {waiting: true} // this may deactivate its UI
+    await save(user)
+    yield {waiting: false} // this may reactivate its UI
+  }
+}
+```
+
+It's epic, isn't it? With an async genrator, we can send data twice or more!
