@@ -4,11 +4,11 @@ import babel from 'rollup-plugin-babel'
 import uglify from 'rollup-plugin-uglify'
 
 export default {
-  input: 'demo/basic-app/main.js',
+  input: 'demo/input-proxy/main.js',
   plugins: [
     resolve(),
     commonjs(),
-    babel({
+    /*babel({
       babelrc: false,
       presets: [
         ['env', {modules: false}]
@@ -17,11 +17,11 @@ export default {
         'transform-async-generator-functions',
         'external-helpers'
       ]
-    }),
-    uglify()
+    }),*/
+    //uglify()
   ],
   output: {
-    file: 'demo/basic-app/bundle.js',
+    file: 'demo/input-proxy/bundle.js',
     format: 'iife',
     sourcemap: true
   }
