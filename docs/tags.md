@@ -6,7 +6,7 @@ Before using helper tag(s), import `dominiq/tags`:
 import 'dominiq/tags'
 ```
 
-## Input Proxy (soon)
+## Input Proxy
 
 Some third party custom elements has no events like `change` or `input`. For such a unstandard element, `<input-proxy>` can proxy events and values.
 

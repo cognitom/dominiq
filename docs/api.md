@@ -28,6 +28,6 @@ The instance `app` has just four methods:
 - `app.start()`: starts the app and renders the first view
 - `app.stop()`: stops the app
 
-## Utilities
+## Tags
 
-- `<input-proxy>`: (not yet implemented)
+- `<input-proxy>`: works as a bridge between non-standard components like Polymer.
