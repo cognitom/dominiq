@@ -5,7 +5,7 @@
 
 A minimalistic approach to create frontend applications:
 
-- `listen()` DOM events and extract them `toData()` in Observable way.
+- `listen()` DOM events and extract data from them in Observable way.
 - `App` class provides an easy way to handle states and actions:
   - `app.commit()` to mutate its state
   - `app.dispatch()` to call an action
@@ -87,9 +87,9 @@ const dom = document.body
 const app = new App({ initialState, actions })
 
 // Listen <input> and commit changes into the state
-listen(dom, "change").map(toData).subscribe(app.commit)
+listen(dom, "change").subscribe(app.commit)
 // Listen <button> and dispatch actions
-listen(dom, "click").map(toName).subscribe(app.dispatch)
+listen(dom, "click").subscribe(app.dispatch)
 // Listen app and render the view
 listen(app, "render").subscribe(state => render(view(state), dom))
 app.start()

@@ -24,7 +24,9 @@ const app = new App({initialState, sanitizers, actions})`
 The instance `app` has just four methods:
 
 - `app.commit(partial)`: merges `partial` data into its state
-- `app.dispatch(name)`: dispatches an action by `name` and returns an observable
+- `app.commit(event)`: converts `event` to data, and merges the data into its state
+- `app.dispatch(name)`: dispatches an action by `name`
+- `app.dispatch(event)`: converts `event` to name, and dispatches an action by the name
 - `app.start()`: starts the app and renders the first view
 - `app.stop()`: stops the app
 

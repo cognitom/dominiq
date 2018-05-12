@@ -174,5 +174,5 @@ And `listen()` from outside the view:
 
 ```javascript
 const dom = document.body // or document.forms[0]
-listen(dom, "change").map(toData).subscribe(...)
+listen(dom, "change").subscribe(...)
 ```

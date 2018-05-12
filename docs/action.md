@@ -26,7 +26,7 @@ Then, dispatch:
 app.dispatch('hello')
 ```
 
-Basically, that's it.
+The argument is the name of the action you want to dispatch. Basically, that's it.
 
 Typically, we use this in Observable streams. If we have such a HTML:
 
@@ -42,13 +42,17 @@ listen(document.body, 'click')
   .subscribe(app.dispatch)
 ```
 
-The argument is the name of the action you want to dispatch.
+Or, here's a shortcut:
+
+```javascript
+listen(document.body, 'click').subscribe(app.dispatch)
+```
 
 **Note**: `.dispatch()` method is bound to `app` in constructor automatically, so you don't have to write like `.subscribe(name => app.dispatch(name))`.
 
 ## Mutation
 
-`app.dispatch()` returns an Observable which emits what the action returns. So it's a good idea to pass it to `app.commit()` to mutate the state:
+If an action returns or yields some data, the data will be sent to `app.commit()` internally:
 
 ```javascript
 const initialState = { counter: 0 }
@@ -56,11 +60,8 @@ const actions = {
   up (state) { return { counter: state.counter + 1 } }
 }
 const app = new App({initialState, actions})
-app.dispatch("up") // returns an Observable
-  .subscribe(app.commit) // subscribe it and pass the data to app.commit()
+app.dispatch("up") // internally the data will be passed to app.commit()
 ```
-
-**Note**: `.commit()` method is bound to `app` in constructor automatically, so you don't have to write like `.subscribe(name => app.commit(name))`.
 
 Ok, then, try the Observable style.
 
@@ -76,9 +77,7 @@ const actions = {
   up (state) { return { counter: state.counter + 1 } }
 }
 const app = new App({initialState, actions})
-listen(document.body, "click").map(toName)
-  .flatMap(app.dispatch) // .flatMap() serialize the Observable which app.dispatch() returns
-  .subscribe(app.commit) // pass them to app.commit()
+listen(document.body, "click").subscribe(app.dispatch)
 ```
 
 The trick happens here: `.flatMap(app.dispatch)` serializes the values into one Observable stream.
