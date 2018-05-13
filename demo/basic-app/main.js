@@ -44,13 +44,8 @@ const actions = {
 
 const app = new App({ initialState, sanitizers, actions })
 const dom = document.body
-listen(dom, "change")
-  .map(toData)
-  .subscribe(app.commit)
-listen(dom, "click")
-  .map(toName)
-  .flatMap(app.dispatch)
-  .subscribe(app.commit)
+listen(dom, "change").subscribe(app.commit)
+listen(dom, "click").subscribe(app.dispatch)
 listen(app, "render")
   .map(emptize)
   .subscribe(state => render(view(state), dom))
