@@ -27,6 +27,42 @@ test("extracts input values with dot concatenated names", () => {
   expect(data).toEqual({ person: { first: "John", last: "Doe" } })
 })
 
+test("extracts checkbox values", () => {
+  const dom = document.body
+  dom.innerHTML = `
+    <form>
+      <input name="fruit" type="checkbox" value="Apple" checked>
+      <input name="fruit" type="checkbox" value="Orange" checked>
+      <input name="fruit" type="checkbox" value="Grape">
+    </form>`
+  const data = extract(dom)
+  expect(data).toEqual({ fruit: ["Apple", "Orange"] })
+})
+
+test("extracts checkbox values (only one checked)", () => {
+  const dom = document.body
+  dom.innerHTML = `
+    <form>
+      <input name="fruit" type="checkbox" value="Apple" checked>
+      <input name="fruit" type="checkbox" value="Orange">
+      <input name="fruit" type="checkbox" value="Grape">
+    </form>`
+  const data = extract(dom)
+  expect(data).toEqual({ fruit: ["Apple"] })
+})
+
+test("extracts radio button values", () => {
+  const dom = document.body
+  dom.innerHTML = `
+    <form>
+      <input name="fruit" type="radio" value="Apple">
+      <input name="fruit" type="radio" value="Orange" checked>
+      <input name="fruit" type="radio" value="Grape">
+    </form>`
+  const data = extract(dom)
+  expect(data).toEqual({ fruit: "Orange" })
+})
+
 test("converts e to name", done => {
   const dom = document.body
   dom.innerHTML = `
