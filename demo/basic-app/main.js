@@ -1,5 +1,5 @@
 import { render } from "lit-html"
-import { listen, toData, toName, App } from "../../lib/"
+import { listen, App } from "../../lib/"
 import { emptize, sleep } from "../lib/util.js"
 import view from "./view.js"
 
