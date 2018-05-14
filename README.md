@@ -63,7 +63,7 @@ Prepare such a view file:
 
 ```javascript
 // view.js
-import {html} from "lit-html/lib/lit-extended"
+import { html } from "lit-html/lib/lit-extended"
 export default state => html`
   <h1>Hello ${ state.first }!</h1>
   <input name="first" value="${ state.first }">
@@ -81,7 +81,7 @@ import view from "./view.js"
 
 const initialState = { first: "", last: "" }
 const actions = {
-  submit (state) { console.log(`Hello ${state.first}!`) }
+  submit (state) { console.log(`Hello ${ state.first }!`) }
 }
 const dom = document.body
 const app = new App({ initialState, actions })
