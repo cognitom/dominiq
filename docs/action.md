@@ -80,8 +80,6 @@ const app = new App({initialState, actions})
 listen(document.body, "click").subscribe(app.dispatch)
 ```
 
-The trick happens here: `.flatMap(app.dispatch)` serializes the values into one Observable stream.
-
 > **Note**: Why not `Promise`? `Promise` can only return the value once. It's not enough. On the other hand, `Observable` can return the values multiple times. See also `async generator` in the next section.
 
 ## Async operation
