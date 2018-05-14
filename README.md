@@ -76,7 +76,7 @@ export default state => html`
 
 ```javascript
 import { render } from "lit-html"
-import { listen, toData, toName, App } from "dominiq"
+import { listen, App } from "dominiq"
 import view from "./view.js"
 
 const initialState = { first: "", last: "" }
