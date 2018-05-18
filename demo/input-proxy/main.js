@@ -1,20 +1,17 @@
 import { render } from "lit-html"
 import { listen, App } from "../../lib/"
 import "../../tags/index.js"
-import view from "./view2.js"
+import view from "./view.js"
 
 const initialState = {
-  os: "i"
-}
-const actions = {
-  submit(state) {
-    console.log(extract(document.body))
-  }
+  num: "one"
 }
 
-const app = new App({ initialState, actions })
+const app = new App({ initialState })
 const dom = document.body
 listen(dom, "change").subscribe(app.commit)
-listen(dom, "click").subscribe(app.dispatch)
 listen(app, "render").subscribe(state => render(view(state), dom))
 app.start()
+
+mdc.tabs.MDCTabBar.attachTo(dom.querySelector('.mdc-tab-bar'))
+mdc.topAppBar.MDCTopAppBar.attachTo(dom.querySelector('.mdc-top-app-bar'))

@@ -4,16 +4,35 @@
 <head>
   <meta charset="utf-8">
   <title>input-proxy</title>
-  <script src="https://cdn.jsdelivr.net/npm/babel-regenerator-runtime@6.5.0/runtime.min.js"></script>
-  <link rel="import" href="https://cdn.jsdelivr.net/npm/@npm-polymer/neon-animation/web-animations.html">
-  <link rel="import" href="https://cdn.jsdelivr.net/npm/@npm-polymer/paper-dropdown-menu/paper-dropdown-menu.html">
-  <link rel="import" href="https://cdn.jsdelivr.net/npm/@npm-polymer/paper-listbox/paper-listbox.html">
-  <link rel="import" href="https://cdn.jsdelivr.net/npm/@npm-polymer/paper-item/paper-item.html">
-  <link rel="import" href="https://cdn.jsdelivr.net/npm/@npm-polymer/paper-button/paper-button.html">
-  <link rel="import" href="https://cdn.jsdelivr.net/npm/@npm-polymer/paper-input/paper-input.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/babel-regenerator-runtime@6.5.0/runtime.min.js"></script> -->
+  <style>
+    /* Theming */
+    :root {
+      --mdc-theme-primary: #3d5afe;
+      --mdc-theme-secondary: #d81b60;
+    }
+    body {
+      margin: 0;
+    }
+    input-proxy {
+      margin: 0 auto;
+    }
+    .mdc-top-app-bar .mdc-tab-bar {
+      --mdc-theme-text-primary-on-light: var(--mdc-theme-text-primary-on-dark);
+      --mdc-theme-text-primary-on-background: var(--mdc-theme-text-primary-on-dark);
+      --mdc-theme-text-secondary-on-background: var(--mdc-theme-text-secondary-on-dark);
+    }
+    .demo-contents {
+      padding: 130px 20px 20px;
+    }
+  </style>
 </head>
 
-<body>
+<body class="mdc-typography">
   <script src="bundle.js"></script>
 </body>
 
