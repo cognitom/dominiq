@@ -49,11 +49,13 @@ export default class InputProxy extends HTMLElement {
   }
   attach() {
     const listener = e => {
-      const cached = cache.get(this)
-      const value = study(this)
-      if (value === cached) return
-      cache.set(this, value)
-      this.dispatchEvent(new Event("change"))
+      setTimeout(() => {
+        const cached = cache.get(this)
+        const value = study(this)
+        if (value === cached) return
+        cache.set(this, value)
+        this.dispatchEvent(new Event("change", { bubbles: true }))
+      }, 50)
     }
     this.addEventListener(this.listen, listener)
     listeners.set(this, listener)
