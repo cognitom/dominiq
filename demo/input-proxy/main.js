@@ -13,5 +13,5 @@ listen(dom, "change").subscribe(app.commit)
 listen(app, "render").subscribe(state => render(view(state), dom))
 app.start()
 
-mdc.tabs.MDCTabBar.attachTo(dom.querySelector('.mdc-tab-bar'))
-mdc.topAppBar.MDCTopAppBar.attachTo(dom.querySelector('.mdc-top-app-bar'))
+mdc.tabs.MDCTabBar.attachTo(dom.querySelector(".mdc-tab-bar"))
+mdc.topAppBar.MDCTopAppBar.attachTo(dom.querySelector(".mdc-top-app-bar"))

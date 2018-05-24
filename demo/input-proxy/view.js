@@ -10,15 +10,16 @@ export default state => html`
     </div>
     <input-proxy name="num" selector=".mdc-tab--active" listen="click">
       <nav class="mdc-tab-bar">
-        ${ ["one", "two", "three"].map(option => {
-          const className = state.num == option ? "mdc-tab mdc-tab--active" : "mdc-tab"
-          return html`<a className="${ className }" value="${ option }">Item ${ option }</a>`
-        }) }
+        ${["one", "two", "three"].map(option => {
+          const className =
+            state.num == option ? "mdc-tab mdc-tab--active" : "mdc-tab"
+          return html`<a className="${className}" value="${option}">Item ${option}</a>`
+        })}
         <span class="mdc-tab-bar__indicator"></span>
       </nav>
     </input-proxy>
   </header>
   <div class="demo-contents">
-    ${ state.num }
+    ${state.num}
   </div>
 `
