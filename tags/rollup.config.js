@@ -1,4 +1,4 @@
-import uglify from "rollup-plugin-uglify"
+import { uglify } from "../scripts/uglify.js"
 
 const production = !process.env.ROLLUP_WATCH
 
