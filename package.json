@@ -22,7 +22,7 @@
     "watch-demo2": "rollup -w -c demo/input-proxy/rollup.config.js",
     "live-server": "live-server demo/ --no-browser",
     "test": "NODE_ENV=test jest --no-cache",
-    "prettier": "prettier --write {lib,tags,test}/**/*.js demo/**/{main,view}.js demo/lib/*.js rollup.config.js",
+    "prettier": "prettier --write {lib,tags,test,scripts}/**/*.js 'demo/**/{,!(bundle)}.js' rollup.config.js",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -44,6 +44,7 @@
     "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-async-generator-functions": "^6.24.1",
+    "babel-plugin-transform-builtin-classes": "^0.6.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "esm": "^3.0.33",
@@ -52,12 +53,12 @@
     "live-server": "^1.2.0",
     "npm-run-all": "^4.1.3",
     "prettier": "^1.12.1",
-    "rollup": "^0.58.2",
+    "rollup": "^0.59.2",
     "rollup-plugin-alias": "^1.4.0",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-uglify": "^3.0.0"
+    "uglify-es": "^3.3.9"
   },
   "babel": {
     "presets": "env"
