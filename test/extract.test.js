@@ -72,12 +72,11 @@ test("converts e to name", done => {
     </form>`
   const input = dom.querySelector("input[name=first]")
   const mock = new DOMMock()
-  listen(mock, "change")
-    .map(toName)
-    .subscribe(name => {
-      expect(name).toBe("first")
-      done()
-    })
+  listen(mock, "change").subscribe(e => {
+    const name = toName(e)
+    expect(name).toBe("first")
+    done()
+  })
   input.value = "Mike"
   mock.dispatch("change", input)
 })
@@ -91,12 +90,11 @@ test("converts e to data", done => {
     </form>`
   const input = dom.querySelector("input[name=first]")
   const mock = new DOMMock()
-  listen(mock, "change")
-    .map(toData)
-    .subscribe(partial => {
-      expect(partial).toEqual({ first: "Mike" })
-      done()
-    })
+  listen(mock, "change").subscribe(e => {
+    const partial = toData(e)
+    expect(partial).toEqual({ first: "Mike" })
+    done()
+  })
   input.value = "Mike"
   mock.dispatch("change", input)
 })
@@ -109,12 +107,11 @@ test("returns null when the target has no name attribute", done => {
     </form>`
   const input = dom.querySelector("input")
   const mock = new DOMMock()
-  listen(mock, "change")
-    .map(toData)
-    .subscribe(partial => {
-      expect(partial).toBeNull()
-      done()
-    })
+  listen(mock, "change").subscribe(e => {
+    const partial = toData(e)
+    expect(partial).toBeNull()
+    done()
+  })
   input.value = "Mike"
   mock.dispatch("change", input)
 })

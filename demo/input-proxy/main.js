@@ -1,6 +1,6 @@
 import { render } from "lit-html"
 import { listen, App } from "../../lib/"
-import "../../tags/index.js"
+import "../../lib/tags.js"
 import view from "./view.js"
 
 const initialState = {

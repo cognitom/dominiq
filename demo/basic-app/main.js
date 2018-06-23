@@ -46,7 +46,5 @@ const app = new App({ initialState, sanitizers, actions })
 const dom = document.body
 listen(dom, "change").subscribe(app.commit)
 listen(dom, "click").subscribe(app.dispatch)
-listen(app, "render")
-  .map(emptize)
-  .subscribe(state => render(view(state), dom))
+listen(app, "render").subscribe(state => render(view(emptize(state)), dom))
 app.start()
