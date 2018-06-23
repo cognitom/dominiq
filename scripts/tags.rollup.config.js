@@ -1,9 +1,9 @@
-import { uglify } from "../scripts/uglify.js"
+import { uglify } from "./uglify.js"
 
 const production = !process.env.ROLLUP_WATCH
 
 export default {
-  input: "tags/index.js",
+  input: "lib/tags.js",
   plugins: [production && uglify()],
   output: {
     file: "tags.js",
