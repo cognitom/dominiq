@@ -10,7 +10,7 @@ $ npm install dominiq
 
 ### Observable
 
-At this point, there's [no Observable support in browsers](https://kangax.github.io/compat-table/esnext/#test-Observable) yet. The easiest way is load this polyfill into your `index.html`:
+At this point, there's [no Observable support in browsers](https://kangax.github.io/compat-table/esnext/#test-Observable) yet. The easiest way is loading this polyfill into your `index.html`:
 
 ```html
 <script src="https://unpkg.com/dominiq/observable-polyfill.js"></script>
