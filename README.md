@@ -1,9 +1,8 @@
-
 # Dominiq
 
 [![Travis CI](https://img.shields.io/travis/cognitom/dominiq/master.svg)](https://travis-ci.org/cognitom/dominiq) [![Codecov](https://img.shields.io/codecov/c/github/cognitom/dominiq/master.svg)](https://codecov.io/gh/cognitom/dominiq) [![npm](https://img.shields.io/npm/v/dominiq.svg)](https://www.npmjs.org/package/dominiq)
 
-A minimalistic approach to create frontend applications:
+A happy medium between classic DOMs and upcoming new ES features:
 
 - `listen()` DOM events and extract data from them in Observable way.
 - `App` class provides an easy way to handle states and actions:
