@@ -1,7 +1,7 @@
 {
   "name": "dominiq",
   "version": "0.7.3",
-  "description": "[WIP] JavaScript utilities and web components for extracting the data from DOM",
+  "description": "A happy medium between classic DOMs and upcoming new ES features",
   "module": "lib/index.js",
   "main": "index.js",
   "files": [
@@ -11,18 +11,21 @@
   ],
   "scripts": {
     "build": "npm run prettier && npm-run-all rollup-*",
-    "rollup-main": "rollup -c",
-    "rollup-tags": "rollup -c tags/rollup.config.js",
+    "rollup-main": "rollup -c scripts/main.rollup.config.js",
+    "rollup-tags": "rollup -c scripts/tags.rollup.config.js",
+    "rollup-polyfill": "rollup -c scripts/polyfill.rollup.config.js",
     "rollup-demo": "rollup -c demo/basic-app/rollup.config.js",
     "rollup-demo2": "rollup -c demo/input-proxy/rollup.config.js",
-    "demo": "npm-run-all --parallel watch-* live-server",
-    "watch-main": "rollup -w -c",
-    "watch-tags": "rollup -w -c tags/rollup.config.js",
+    "demo": "npm-run-all --parallel babel-helpers watch-* live-server",
+    "babel-helpers": "babel-external-helpers > demo/lib/babel-external-helpers.js",
+    "watch-main": "rollup -w -c scripts/main.rollup.config.js",
+    "watch-tags": "rollup -w -c scripts/tags.rollup.config.js",
+    "watch-polyfill": "rollup -w -c scripts/polyfill.rollup.config.js",
     "watch-demo": "rollup -w -c demo/basic-app/rollup.config.js",
     "watch-demo2": "rollup -w -c demo/input-proxy/rollup.config.js",
-    "live-server": "live-server demo/ --no-browser",
+    "live-server": "live-server ./ --no-browser",
     "test": "NODE_ENV=test jest --no-cache",
-    "prettier": "prettier --write {lib,tags,test,scripts}/**/*.js 'demo/**/{,!(bundle)}.js' rollup.config.js",
+    "prettier": "prettier --write {lib,test,scripts}/**/*.js 'demo/**/{,!(bundle|babel-external-helpers)}.js' rollup.config.js",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -37,24 +40,24 @@
   },
   "homepage": "https://github.com/cognitom/dominiq#readme",
   "dependencies": {
-    "fafgag": "^0.3.1",
-    "zen-observable": "^0.8.8"
+    "fafgag": "^0.3.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-async-generator-functions": "^6.24.1",
     "babel-plugin-transform-builtin-classes": "^0.6.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "esm": "^3.0.33",
-    "jest": "^22.4.3",
-    "lit-html": "^0.10.0",
+    "es-observable": "github:tc39/proposal-observable",
+    "esm": "^3.0.52",
+    "jest": "^23.1.0",
+    "lit-html": "^0.10.2",
     "live-server": "^1.2.0",
     "npm-run-all": "^4.1.3",
-    "prettier": "^1.12.1",
-    "rollup": "^0.59.2",
-    "rollup-plugin-alias": "^1.4.0",
+    "prettier": "^1.13.5",
+    "rollup": "^0.61.2",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",
@@ -67,7 +70,10 @@
     "verbose": true,
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "lib/*.js"
+      "lib/{,!(observable-polyfill|input-proxy|tags)}.js"
+    ],
+    "setupFiles": [
+      "./observable-polyfill.js"
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!fafgag).+\\.js$"
