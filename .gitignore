@@ -3,7 +3,6 @@
 *.map
 /index.js
 /tags.js
-observable-polyfill.js
 bundle.js
 /coverage
 
