@@ -10,9 +10,13 @@ $ npm install dominiq
 
 ### Observable
 
-There's nothing you have to do manually. At this point, there's [no Observable support in browsers](https://kangax.github.io/compat-table/esnext/#test-Observable) yet. So we use [zen-observable](https://github.com/zenparsing/zen-observable) as a polyfill *internally*. In the future, we will probably drop this dependency.
+At this point, there's [no Observable support in browsers](https://kangax.github.io/compat-table/esnext/#test-Observable) yet. The easiest way is load this polyfill into your `index.html`:
 
-**Note**: we use `.map()` `.filter()` `.flatMap()` in examples. But be aware that they're extentions by `zen-observable` and [still not appeared in the proposal](https://github.com/tc39/proposal-observable#example-observing-keyboard-events).
+```html
+<script src="https://unpkg.com/dominiq/observable-polyfill.js"></script>
+```
+
+This script introduces [Observable](https://github.com/tc39/proposal-observable/blob/master/src/Observable.js) as a global.
 
 ### Async iteration
 
@@ -67,5 +71,5 @@ export default {
 You may also need `regenerator` in some way:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/babel-regenerator-runtime@6.5.0/runtime.min.js"></script>
+<script src="https://unpkg.com/regenerator-runtime/runtime.js"></script>
 ```

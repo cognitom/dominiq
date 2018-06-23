@@ -52,8 +52,7 @@ Or, merge them into the `state` continuously in Observable way:
 ```javascript
 const state = { first: "", last: "" }
 listen(document.body, "change") // Create event observable
-  .map(toData) // Extract the data
-  .subscribe(data => merge(state, data))
+  .subscribe(e => merge(state, toData(e))) // Extract the data
 ```
 
 ## Basic usages

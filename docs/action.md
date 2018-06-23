@@ -38,14 +38,14 @@ we can use `app.dispatch` like this:
 
 ```javascript
 listen(document.body, 'click')
-  .map(toName) // extract name from `event.target`
-  .subscribe(app.dispatch)
+  .subscribe(e => app.dispatch(toName(e))) // extract name from `event.target`
 ```
 
 Or, here's a shortcut:
 
 ```javascript
 listen(document.body, 'click').subscribe(app.dispatch)
+// .dispatch() handles events as much as the names of actions. 
 ```
 
 **Note**: `.dispatch()` method is bound to `app` in constructor automatically, so you don't have to write like `.subscribe(name => app.dispatch(name))`.
