@@ -30,6 +30,18 @@ The instance `app` has just four methods:
 - `app.start()`: starts the app and renders the first view
 - `app.stop()`: stops the app
 
+And, the `app` can be extended after the creation:
+
+- `app.extend({initialState, sanitizers, actions})`: extends states, sanitizers and actions
+
+This extending is useful when you delgate the `app` to sub components.
+
+To `listen` the events on the `app`:
+
+- `listen(app, type)`: create an `Observable`
+  - *app*: `App`
+  - *type*: 'render', 'started', 'stopped'
+
 ## Tags
 
 - `<input-proxy>`: works as a bridge between non-standard components like Polymer.

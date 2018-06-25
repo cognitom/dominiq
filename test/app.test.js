@@ -15,6 +15,30 @@ test("creates app with initialState", done => {
   app.start()
 })
 
+test("doesn't trigger a render event before starting", done => {
+  let count = 0
+  const initialState = { first: "John" }
+  const app = new App({ initialState })
+  app.commit({ last: "Doe" })
+  listen(app, "render").subscribe(state => {
+    count++
+  })
+  app.start()
+  expect(count).toEqual(1)
+  done()
+})
+
+test("extends states", done => {
+  const initialState = { first: "John" }
+  const app = new App({ initialState })
+  app.extend({ initialState: { last: "Doe" } })
+  listen(app, "render").subscribe(state => {
+    expect(state).toEqual({ first: "John", last: "Doe" })
+    done()
+  })
+  app.start()
+})
+
 test("creates app with initialState and sanitizers", done => {
   const initialState = { first: "John", last: "Doe" }
   const sanitizers = {
