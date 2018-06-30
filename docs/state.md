@@ -24,6 +24,16 @@ But it's not enough. The state could be changed via user inputs, or server commu
 
 > **Note**: `render()` function is not the part of `dominiq` but provided from [lit-html](https://github.com/Polymer/lit-html) or other view libraries.
 
+## Supported types
+
+As a state, we can use these types (Date + types available in JSON):
+
+- `String`
+- `Number`
+- `Boolean`
+- `Date`
+- `null`
+
 ## Set and get
 
 Domniq provides the simple way to commit or retrieve a new state. The first step is make an App instance with `initialState`:
