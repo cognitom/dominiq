@@ -1,6 +1,6 @@
 {
   "name": "dominiq",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "description": "A happy medium between classic DOMs and upcoming new ES features",
   "module": "lib/index.js",
   "main": "index.js",
