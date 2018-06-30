@@ -1,4 +1,3 @@
-
 # Action
 
 An action is just a function. For example, a simple action could be like following:

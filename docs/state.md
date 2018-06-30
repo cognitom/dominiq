@@ -1,4 +1,3 @@
-
 # State
 
 In Dominiq, a state of application is just a pure object. For example:
@@ -31,6 +30,8 @@ As a state, we can use these types (Date + types available in JSON):
 - `String`
 - `Number`
 - `Boolean`
+- `Array`
+- `Object`
 - `Date`
 - `null`
 
