@@ -47,6 +47,7 @@ listen(document.body, 'click').subscribe(app.dispatch)
 // .dispatch() handles events as much as the names of actions. 
 ```
 
+**Note**: `.dispatch()` method will processed asyncronously.
 **Note**: `.dispatch()` method is bound to `app` in constructor automatically, so you don't have to write like `.subscribe(name => app.dispatch(name))`.
 
 ## Mutation
