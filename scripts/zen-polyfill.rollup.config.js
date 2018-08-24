@@ -3,12 +3,12 @@ import { uglify } from "./uglify.js"
 const production = !process.env.ROLLUP_WATCH
 
 export default {
-  input: "lib/observable-polyfill.js",
+  input: "lib/zen-observable-polyfill.js",
   plugins: [production && uglify()],
   output: {
-    file: "observable-polyfill.js",
+    file: "zen-observable-polyfill.js",
     format: "iife",
-    name: "observablePolyfill",
+    name: "zenObservablePolyfill",
     sourcemap: !production
   }
 }
