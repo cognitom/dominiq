@@ -40,7 +40,7 @@ To `listen` the events on the `app`:
 
 - `listen(app, type)`: create an `Observable`
   - *app*: `App`
-  - *type*: 'render', 'started', 'stopped'
+  - *type*: 'render', 'rendered', 'started', 'stopped', 'changed:*' *See more details [here](events.md)*
 
 ## Tags
 
