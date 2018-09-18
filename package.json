@@ -75,7 +75,7 @@
     "verbose": true,
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "lib/{,!(observable-polyfill|input-proxy|tags)}.js"
+      "lib/{,!(observable-polyfill|zen-observable-polyfill|input-proxy|tags)}.js"
     ],
     "setupFiles": [
       "./observable-polyfill.js"
