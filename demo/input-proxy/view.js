@@ -1,4 +1,4 @@
-import { html } from "lit-html/lib/lit-extended"
+import { html } from "lit-html"
 
 export default state => html`
   <header class="mdc-top-app-bar mdc-elevation--z4">
@@ -13,7 +13,7 @@ export default state => html`
         ${["one", "two", "three"].map(option => {
           const className =
             state.num == option ? "mdc-tab mdc-tab--active" : "mdc-tab"
-          return html`<a className="${className}" value="${option}">Item ${option}</a>`
+          return html`<a class="${className}" .value="${option}">Item ${option}</a>`
         })}
         <span class="mdc-tab-bar__indicator"></span>
       </nav>
