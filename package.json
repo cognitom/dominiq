@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/cognitom/dominiq#readme",
   "dependencies": {
-    "fafgag": "^0.3.3"
+    "fafgag": "^0.3.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
