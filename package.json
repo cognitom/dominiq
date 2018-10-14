@@ -65,7 +65,7 @@
     "zen-observable": "^0.8.9"
   },
   "babel": {
-    "presets": "env"
+    "presets": "@babel/preset-env"
   },
   "jest": {
     "verbose": true,
