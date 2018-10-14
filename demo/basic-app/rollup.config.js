@@ -10,10 +10,10 @@ export default {
     commonjs(),
     babel({
       babelrc: false,
-      presets: [["env", { modules: false }]],
-      plugins: ["transform-async-generator-functions", "external-helpers"]
-    }),
-    uglify()
+      presets: [["@babel/env", { modules: false }]],
+      plugins: ["@babel/plugin-proposal-async-generator-functions"]
+    })
+    //uglify()
   ],
   output: {
     file: "demo/basic-app/bundle.js",

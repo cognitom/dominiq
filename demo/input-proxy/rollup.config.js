@@ -10,26 +10,8 @@ export default {
     commonjs(),
     babel({
       babelrc: false,
-      presets: [
-        [
-          "env",
-          {
-            modules: false,
-            exclude: ["transform-es2015-classes"]
-          }
-        ]
-      ],
-      plugins: [
-        [
-          "transform-builtin-classes",
-          {
-            globals: ["HTMLElement"]
-          }
-        ],
-        "transform-es2015-classes",
-        "transform-async-generator-functions",
-        "external-helpers"
-      ]
+      presets: [["@babel/env", { modules: false }]],
+      plugins: ["@babel/plugin-proposal-async-generator-functions"]
     }),
     uglify()
   ],
